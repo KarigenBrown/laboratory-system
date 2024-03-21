@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,6 +38,7 @@ public class WebManager {
     /**
      * 权限
      */
+    @Schema(title = "账号拥有的管理权限,具体类别待定,分割")
     private String permits;
     /**
      * 逻辑删除标志(0代表未删除,1代表已删除)

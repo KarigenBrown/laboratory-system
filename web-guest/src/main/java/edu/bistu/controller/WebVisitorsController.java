@@ -24,8 +24,8 @@ public class WebVisitorsController {
     @Autowired
     private WebVisitorsService webVisitorsService;
 
-    @RequestMapping("/")
     @Transactional
+    @RequestMapping("/")
     public Response<Integer> count() {
         WebVisitors visitorsNum = webVisitorsService.getById(1);
         int newVisitorsNum = visitorsNum.getVisitornum() + 1;

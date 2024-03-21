@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -53,7 +54,8 @@ public class WebMember {
     /**
      * 学工号
      */
-    private String studentNumber;
+    @Schema(title = "学工号,即唯一标识")
+    private String number;
     /**
      * 在校生年级
      */
@@ -61,10 +63,12 @@ public class WebMember {
     /**
      * 隐藏字段,分割
      */
+    @Schema(title="个人页面隐藏的字段,具体类别待定,分割")
     private String hiddenFields;
     /**
      * 照片链接
      */
+    @Schema(title = "照片的链接,换行分割,或者任意分割方式,数据库统一使用字符串存储")
     private String photoUrl;
     /**
      * 毕业去向

@@ -22,12 +22,5 @@ public class WebLogController {
      */
     @Autowired
     private WebLogService webLogService;
-
-    @GetMapping("/")
-    public String index() {
-        WebLog byId = webLogService.getById(1);
-        System.out.println(byId.getLog());
-        return "ok";
-    }
 }
 

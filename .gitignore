@@ -40,3 +40,4 @@ build/
 *.yaml
 *.yml
 *.properties
+/container/

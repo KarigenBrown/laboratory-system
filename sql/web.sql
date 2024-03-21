@@ -101,7 +101,7 @@ CREATE TABLE `web_member`
     `achievement`          text COMMENT '科研成果',
     `introduction`         text COMMENT '个人经历',
 
-    student_number         varchar(100)     not null comment '学工号',
+    number         varchar(100)     not null comment '学工号',
     grade                  varchar(50) comment '在校生年级',
     hidden_fields          varchar(255) comment '隐藏字段,分割',
     photo_url              varchar(255)     not null comment '照片链接',
