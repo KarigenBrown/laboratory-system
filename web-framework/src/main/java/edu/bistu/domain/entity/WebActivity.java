@@ -17,7 +17,7 @@ import java.io.Serializable;
  * @author makejava
  * @since 2024-03-20 19:09:12
  */
-
+@Schema(title = "活动实体")
 @Data
 @TableName("web_activity")
 @Accessors(chain = true)

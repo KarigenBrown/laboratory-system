@@ -20,7 +20,7 @@ import java.io.Serializable;
  * @author makejava
  * @since 2024-03-20 19:09:24
  */
-
+@Schema(title = "demo实体")
 @Data
 @TableName("web_demo")
 @Accessors(chain = true)
