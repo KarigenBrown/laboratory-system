@@ -36,8 +36,3 @@ build/
 
 ### Mac OS ###
 .DS_Store
-
-*.yaml
-*.yml
-*.properties
-/container/
