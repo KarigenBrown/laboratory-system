@@ -27,6 +27,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class WebManager {
     private Integer id;
+    @Schema(title = "学工号,即唯一标识")
+    private String number;
     /**
      * 账号
      */

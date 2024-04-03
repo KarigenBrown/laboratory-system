@@ -70,6 +70,7 @@ DROP TABLE IF EXISTS `web_manager`;
 CREATE TABLE `web_manager`
 (
     `id`        int(10) unsigned NOT NULL AUTO_INCREMENT,
+    number      varchar(100)     not null comment '学工号',
     `username`  varchar(50)  DEFAULT '' COMMENT '账号',
     `password`  varchar(50)  DEFAULT '' COMMENT '密码',
 
@@ -101,7 +102,7 @@ CREATE TABLE `web_member`
     `achievement`          text COMMENT '科研成果',
     `introduction`         text COMMENT '个人经历',
 
-    number         varchar(100)     not null comment '学工号',
+    number                 varchar(100)     not null comment '学工号',
     grade                  varchar(50) comment '在校生年级',
     hidden_fields          varchar(255) comment '隐藏字段,分割',
     photo_url              varchar(255)     not null comment '照片链接',
@@ -198,6 +199,7 @@ create table web_activity
     urls         text comment '换行分割',
     introduction text         not null,
     content      text         not null,
+    date         date         not null,
 
     deleted      int(1)   default 0 comment '逻辑删除标志(0代表未删除,1代表已删除)',
     create_by    int(10)  default null,

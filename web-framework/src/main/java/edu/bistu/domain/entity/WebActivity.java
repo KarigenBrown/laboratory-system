@@ -38,6 +38,7 @@ public class WebActivity {
 
     @Schema(title = "保留字段")
     private String content;
+    private Date date;
     /**
      * 逻辑删除标志(0代表未删除,1代表已删除)
      */

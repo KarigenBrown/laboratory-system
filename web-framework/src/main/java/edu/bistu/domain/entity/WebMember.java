@@ -35,6 +35,7 @@ public class WebMember {
      * 姓名
      */
     private String name;
+    private String password;
     /**
      * 联系方式
      */
