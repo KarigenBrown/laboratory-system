@@ -23,7 +23,7 @@ mybatis-plus:
       logic-not-delete-value: 0
       id-type: auto
 minio:
-  endpoint: 1
-  bucket-name: 2
-  access-key: 3
-  secret-key: 4
+  endpoint: http://localhost:9000
+  bucket-name: web
+  access-key: minioadmin
+  secret-key: minioadmin
