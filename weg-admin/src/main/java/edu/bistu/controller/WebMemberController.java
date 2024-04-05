@@ -1,7 +1,6 @@
 package edu.bistu.controller;
 
 
-import edu.bistu.config.MinioConfig;
 import edu.bistu.domain.Response;
 import edu.bistu.domain.entity.WebMember;
 import edu.bistu.service.WebMemberService;
@@ -33,7 +32,11 @@ public class WebMemberController {
 
     @GetMapping("/{userNumber}")
     public Response<WebMember> getMemberByNumber(@PathVariable("userNumber") String number) {
-        return Response.ok(webMemberService.lambdaQuery().eq(WebMember::getNumber, number).one());
+        return Response.ok(
+                webMemberService.lambdaQuery()
+                        .eq(WebMember::getNumber, number)
+                        .one()
+        );
     }
 
     @PostMapping("/photo")
@@ -51,7 +54,7 @@ public class WebMemberController {
         return Response.ok();
     }
 
-    //
+    //--------------------------------------------------
 
     @GetMapping("/all")
     public Response<List<WebMember>> getAllMembers() {
@@ -60,12 +63,20 @@ public class WebMemberController {
 
     @GetMapping("/name/{name}")
     public Response<List<WebMember>> getMembersByName(@PathVariable("name") String name) {
-        return Response.ok(webMemberService.lambdaQuery().like(WebMember::getName, name).list());
+        return Response.ok(
+                webMemberService.lambdaQuery()
+                        .like(WebMember::getName, name)
+                        .list()
+        );
     }
 
     @GetMapping("/identity/{identity}")
     public Response<List<WebMember>> getMembersByIdentity(@PathVariable("identity") String identity) {
-        return Response.ok(webMemberService.lambdaQuery().eq(WebMember::getIdentity, identity).list());
+        return Response.ok(
+                webMemberService.lambdaQuery()
+                        .eq(WebMember::getIdentity, identity)
+                        .list()
+        );
     }
 
     @DeleteMapping("/{id}")
@@ -78,8 +89,7 @@ public class WebMemberController {
     public Response<Object> postMember(@RequestBody WebMember member) {
         member.setPhotoUrl("");
         webMemberService.save(member);
-        Integer id = webMemberService.lambdaQuery().orderByDesc(WebMember::getId).list().get(0).getId();
-        return Response.ok(Map.of("id", id));
+        return Response.ok(Map.of("id", member.getId()));
     }
 }
 

@@ -37,7 +37,11 @@ public class WebManagerController {
 
     @GetMapping("/{username}")
     public Response<List<WebManager>> getManagerByUsername(@PathVariable("username") String username) {
-        return Response.ok(webManagerService.lambdaQuery().like(WebManager::getUsername, username).list());
+        return Response.ok(
+                webManagerService.lambdaQuery()
+                        .like(WebManager::getUsername, username)
+                        .list()
+        );
     }
 
     @PutMapping

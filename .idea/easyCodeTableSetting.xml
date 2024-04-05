@@ -211,6 +211,12 @@
                     <option name="type" value="java.lang.String" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
+                    <option name="custom" value="false" />
+                    <option name="ext" value="{}" />
+                    <option name="name" value="date" />
+                    <option name="type" value="java.util.Date" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
                     <option name="comment" value="逻辑删除标志(0代表未删除,1代表已删除)" />
                     <option name="custom" value="false" />
                     <option name="ext" value="{}" />
@@ -245,9 +251,9 @@
               </option>
               <option name="name" value="WebActivity" />
               <option name="preName" value="" />
-              <option name="saveModelName" value="web-guest" />
+              <option name="saveModelName" value="weg-admin" />
               <option name="savePackageName" value="edu.bistu" />
-              <option name="savePath" value="./web-guest/src/main/java/edu/bistu" />
+              <option name="savePath" value="./weg-admin/src/main/java/edu/bistu" />
               <option name="templateGroupName" value="MybatisPlus" />
             </TableInfoDTO>
           </value>
