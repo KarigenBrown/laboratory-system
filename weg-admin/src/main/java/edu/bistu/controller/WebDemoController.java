@@ -65,7 +65,7 @@ public class WebDemoController {
 
     @PostMapping("/{title}/video/upload")
     public Response<Map<String, String>> uploadVideo(@PathVariable("title") String title,
-                                                     @RequestPart("photos") List<MultipartFile> files) {
+                                                     @RequestPart("videos") List<MultipartFile> files) {
         List<String> videoUrls = new ArrayList<>();
         String path = "demo/" + title + "/video/";
         files.forEach(file -> {
