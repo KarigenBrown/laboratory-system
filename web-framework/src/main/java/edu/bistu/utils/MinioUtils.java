@@ -7,6 +7,7 @@ import io.minio.http.Method;
 import io.minio.messages.Bucket;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;

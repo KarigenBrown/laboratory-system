@@ -1,11 +1,11 @@
 package edu.bistu.controller;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.bistu.domain.Response;
 import edu.bistu.domain.entity.WebActivity;
 import edu.bistu.service.WebActivityService;
 import edu.bistu.utils.MinioUtils;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -53,7 +53,7 @@ public class WebActivityController {
     }
 
     @SneakyThrows
-    @PostMapping("/webActivity/{title}/photo")
+    @PostMapping("/webActivity/{title}/photo/upload")
     public Response<Map<String, String>> uploadPhoto(@PathVariable("title") String title,
                                                      @RequestParam("photoName") String name,
                                                      @RequestPart("photos") List<MultipartFile> files) {
@@ -68,6 +68,14 @@ public class WebActivityController {
             urls.add(url);
         });
         return Response.ok(Map.of("urls", String.join("\n", urls)));
+    }
+
+    @GetMapping("/webActivity/{title}/photo/download/{filename}")
+    public void downloadPhoto(@PathVariable("title") String title,
+                              @PathVariable("filename") String filename,
+                              HttpServletResponse response) {
+        String name = "activityPhoto/" + title + "/" + filename;
+        minioUtils.download("web", name, response);
     }
 
     @PostMapping("/webActivity")
