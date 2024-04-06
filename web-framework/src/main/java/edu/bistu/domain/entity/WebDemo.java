@@ -34,6 +34,7 @@ public class WebDemo {
 
     private Date time;
 
+    @TableField("`group`")
     private String group;
 
     private String introduction;
