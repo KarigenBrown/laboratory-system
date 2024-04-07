@@ -22,6 +22,7 @@ import java.util.Map;
  * @since 2024-04-05 13:55:08
  */
 @RestController
+@RequestMapping("/webActivity")
 public class WebActivityController {
     /**
      * 服务对象
@@ -32,12 +33,12 @@ public class WebActivityController {
     @Autowired
     private MinioUtils minioUtils;
 
-    @GetMapping("/webActivity/all")
+    @GetMapping("/all")
     public Response<List<WebActivity>> getAllActivities() {
         return Response.ok(webActivityService.list());
     }
 
-    @GetMapping("/webActivity/{title}")
+    @GetMapping("/{title}")
     public Response<List<WebActivity>> getActivitiesByTitle(@PathVariable("title") String title) {
         return Response.ok(
                 webActivityService.lambdaQuery()
@@ -46,14 +47,14 @@ public class WebActivityController {
         );
     }
 
-    @DeleteMapping("/webActivity/{id}")
+    @DeleteMapping("/{id}")
     public Response<Object> deleteActivityById(@PathVariable("id") Integer id) {
         webActivityService.removeById(id);
         return Response.ok();
     }
 
     @SneakyThrows
-    @PostMapping("/webActivity/{title}/photo/upload")
+    @PostMapping("/{title}/photo/upload")
     public Response<Map<String, String>> uploadPhoto(@PathVariable("title") String title,
                                                      @RequestParam("photoName") String name,
                                                      @RequestPart("photos") List<MultipartFile> files) {
@@ -70,7 +71,7 @@ public class WebActivityController {
         return Response.ok(Map.of("urls", String.join("\n", urls)));
     }
 
-    @GetMapping("/webActivity/{title}/photo/download/{filename}")
+    @GetMapping("/{title}/photo/download/{filename}")
     public void downloadPhoto(@PathVariable("title") String title,
                               @PathVariable("filename") String filename,
                               HttpServletResponse response) {
@@ -78,13 +79,13 @@ public class WebActivityController {
         minioUtils.download("web", name, response);
     }
 
-    @PostMapping("/webActivity")
+    @PostMapping
     public Response<Map<String, Integer>> postActivity(@RequestBody WebActivity activity) {
         webActivityService.save(activity);
         return Response.ok(Map.of("id", activity.getId()));
     }
 
-    @PutMapping("/webActivity")
+    @PutMapping
     public Response<Object> putActivity(@RequestBody WebActivity activity) {
         webActivityService.updateById(activity);
         return Response.ok();

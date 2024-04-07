@@ -167,9 +167,9 @@
               </option>
               <option name="name" value="WebAchievement" />
               <option name="preName" value="" />
-              <option name="saveModelName" value="web-guest" />
+              <option name="saveModelName" value="weg-admin" />
               <option name="savePackageName" value="edu.bistu" />
-              <option name="savePath" value="./web-guest/src/main/java/edu/bistu" />
+              <option name="savePath" value="./weg-admin/src/main/java/edu/bistu" />
               <option name="templateGroupName" value="MybatisPlus" />
             </TableInfoDTO>
           </value>
@@ -707,9 +707,9 @@
               </option>
               <option name="name" value="WebProject" />
               <option name="preName" value="" />
-              <option name="saveModelName" value="web-guest" />
+              <option name="saveModelName" value="weg-admin" />
               <option name="savePackageName" value="edu.bistu" />
-              <option name="savePath" value="./web-guest/src/main/java/edu/bistu" />
+              <option name="savePath" value="./weg-admin/src/main/java/edu/bistu" />
               <option name="templateGroupName" value="MybatisPlus" />
             </TableInfoDTO>
           </value>
