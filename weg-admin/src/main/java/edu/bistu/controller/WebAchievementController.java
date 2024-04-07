@@ -3,7 +3,6 @@ package edu.bistu.controller;
 
 import edu.bistu.domain.Response;
 import edu.bistu.domain.entity.WebAchievement;
-import edu.bistu.domain.entity.WebProject;
 import edu.bistu.service.WebAchievementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -69,7 +68,7 @@ public class WebAchievementController {
                         .eq(type.equals("年份"), WebAchievement::getTheyear, info)
                         .like(type.equals("期刊（首字母）"), WebAchievement::getInitials, info)
                         .like(type.equals("作者"), WebAchievement::getAuthor, info)
-                        .or().like(type.equals("作者"), WebAchievement::getAuthors, info)
+                        .or(type.equals("作者")).like(type.equals("作者"), WebAchievement::getAuthors, info)
                         .list()
         );
     }
