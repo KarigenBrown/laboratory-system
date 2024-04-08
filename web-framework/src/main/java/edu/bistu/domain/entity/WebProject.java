@@ -45,7 +45,7 @@ public class WebProject {
      * 项目状态
      */
     @Schema(title = "项目状态,分为在研、结题")
-    private String status;
+    private Integer status;
     /**
      * 逻辑删除标志(0代表未删除,1代表已删除)
      */

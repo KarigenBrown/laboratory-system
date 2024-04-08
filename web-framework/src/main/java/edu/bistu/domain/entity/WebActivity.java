@@ -32,7 +32,7 @@ public class WebActivity {
      * 换行分割
      */
     @Schema(title = "照片的链接,换行分割,或者任意分割方式,数据库统一使用字符串存储")
-    private String urls;
+    private String urls = "";
 
     private String introduction;
 

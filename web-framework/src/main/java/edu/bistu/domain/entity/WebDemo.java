@@ -42,12 +42,12 @@ public class WebDemo {
      * 换行分割
      */
     @Schema(title = "视频的链接,换行分割,或者任意分割方式,数据库统一使用字符串存储")
-    private String videoUrls;
+    private String videoUrls = "";
     /**
      * 换行分割
      */
     @Schema(title = "照片的链接,换行分割,或者任意分割方式,数据库统一使用字符串存储")
-    private String photoUrls;
+    private String photoUrls = "";
 
     private String location;
 

@@ -59,16 +59,16 @@ public class WebAchievement {
     private String initials;
     //是否为实验室内部论文
     @Schema(title = "是否为实验室内部论文,0不是,1是")
-    private Integer internal;
+    private String internal;
     //论文状态
     @Schema(title = "论文状态,包括草稿、已发布")
-    private String articleStatus;
+    private Integer articleStatus;
     //是否隐藏
     @Schema(title = "论文是否隐藏")
-    private Integer hidden;
+    private String hidden;
     //技术状态
     @Schema(title = "技术状态,分为申请中、已授权")
-    private String techniqueStatus;
+    private Integer techniqueStatus;
     //类别
     @Schema(title = "原成就的类别")
     private String achievementCategory;

@@ -27,7 +27,7 @@ CREATE TABLE `web_achievement`
 (
     -- 原论文的字段
     `id`                   int(10) unsigned NOT NULL AUTO_INCREMENT,
-    `title`                varchar(100) DEFAULT '' COMMENT '新闻标题', -- article title与achievement name合并
+    `title`                varchar(100) DEFAULT '' COMMENT '新闻标题',              -- article title与achievement name合并
     `journal`              varchar(100) DEFAULT '' COMMENT '期刊',
     `author`               varchar(100) DEFAULT '' COMMENT '第一作者',
     `authors`              varchar(100) DEFAULT '' COMMENT '其他作者',
@@ -35,14 +35,16 @@ CREATE TABLE `web_achievement`
     `link`                 varchar(100) DEFAULT '详情页链接',
     `papercode`            varchar(100) DEFAULT '代码',
     `theyear`              varchar(10)  DEFAULT '' COMMENT '论文年份',
-    `abstract`             text COMMENT '摘要',
+    `abstract`             text          COMMENT '摘要',
 
     category               varchar(100)     not null comment '类别',
-    initials               varchar(255)     not null comment '论文首字母',
-    internal               int(1)       default 1 comment '是否为实验室内部论文',
-    article_status         varchar(50) comment '论文状态',
-    hidden                 int(1)       default 0 comment '是否隐藏',
-    technique_status       varchar(50) comment '技术状态',
+    initials               varchar(255) default '' '论文首字母',
+    -- 修改
+    internal               varchar(1)   default '1' comment '是否为实验室内部论文', -- 原int(1)
+    article_status         int(1)       default 0 comment '论文状态',               -- 原varchar(50)
+    hidden                 varchar(1)   default '0' comment '是否隐藏',             -- 原int(1)
+    technique_status       int(1)       default 0 comment '技术状态',               -- 原varchar(50)
+    -- 结束
 
     -- 原成就字段
     -- `id`       int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -75,12 +77,12 @@ CREATE TABLE `web_manager`
     `password`  varchar(50)  DEFAULT '' COMMENT '密码',
 
     permits     varchar(100) default '个人' comment '权限',
+
     deleted     int(1)       default 0 comment '逻辑删除标志(0代表未删除,1代表已删除)',
     create_by   int(10)      default null,
     create_time datetime     default null,
     update_by   int(10)      default null,
     update_time datetime     default null,
-
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 3
@@ -94,19 +96,19 @@ DROP TABLE IF EXISTS `web_member`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `web_member`
 (
-    `id`                   int(10) unsigned NOT NULL AUTO_INCREMENT,
+    `id`                   int(10) unsigned        NOT NULL AUTO_INCREMENT,
     `identity`             varchar(100) DEFAULT '' COMMENT '身份',
     `name`                 varchar(100) DEFAULT '' COMMENT '姓名',
     `contact`              varchar(100) DEFAULT '' COMMENT '联系方式',
     `research`             varchar(100) DEFAULT '' COMMENT '研究方向',
-    `achievement`          text COMMENT '科研成果',
-    `introduction`         text COMMENT '个人经历',
+    `achievement`          text          COMMENT '科研成果',
+    `introduction`         text          COMMENT '个人经历',
 
-    number                 varchar(100)     not null comment '学工号',
+    number                 varchar(100)            not null comment '学工号',
     grade                  varchar(50) comment '在校生年级',
-    hidden_fields          varchar(255) comment '隐藏字段,分割',
-    photo_url              varchar(255)     not null comment '照片链接',
-    graduation_destination varchar(255) comment '毕业去向',
+    hidden_fields          varchar(255) default '' comment '隐藏字段,分割',
+    photo_url              varchar(255) default '' not null comment '照片链接',
+    graduation_destination varchar(255) default '' comment '毕业去向',
     graduation_time        date comment '毕业时间',
     deleted                int(1)       default 0 comment '逻辑删除标志(0代表未删除,1代表已删除)',
     create_by              int(10)      default null,
@@ -133,7 +135,7 @@ CREATE TABLE `web_project`
     `theyear`   varchar(10)  DEFAULT '' COMMENT '项目年份',
     content     text,
 
-    status      varchar(50) comment '项目状态',
+    status      int(1)       default 0 comment '项目状态', -- 原varchar(50)
     deleted     int(1)       default 0 comment '逻辑删除标志(0代表未删除,1代表已删除)',
     create_by   int(10)      default null,
     create_time datetime     default null,
@@ -175,28 +177,28 @@ CREATE TABLE `web_visitors`
 create table web_demo
 (
     id           int(10) unsigned primary key auto_increment,
-    title        varchar(255) not null,
-    time         date         not null,
-    `group`      varchar(255) not null,
-    introduction text         not null,
-    video_urls   text         not null comment '换行分割',
-    photo_urls   text         not null comment '换行分割',
-    location     varchar(255) not null,
-    content      text         not null,
-    keywords     varchar(255) not null comment ',分割',
+    title        varchar(255)            not null,
+    time         date                    not null,
+    `group`      varchar(255)            not null,
+    introduction text                    not null,
+    video_urls   text          comment '换行分割',
+    photo_urls   text          comment '换行分割',
+    location     varchar(255) default '' not null,
+    content      text         ,
+    keywords     varchar(255) default '' not null comment ',分割',
 
-    deleted      int(1)   default 0 comment '逻辑删除标志(0代表未删除,1代表已删除)',
-    create_by    int(10)  default null,
-    create_time  datetime default null,
-    update_by    int(10)  default null,
-    update_time  datetime default null
+    deleted      int(1)       default 0 comment '逻辑删除标志(0代表未删除,1代表已删除)',
+    create_by    int(10)      default null,
+    create_time  datetime     default null,
+    update_by    int(10)      default null,
+    update_time  datetime     default null
 );
 
 create table web_activity
 (
     id           int(10) unsigned primary key auto_increment,
     title        varchar(255) not null,
-    urls         text comment '换行分割',
+    urls         text     comment '换行分割',
     introduction text         not null,
     content      text         not null,
     date         date         not null,
@@ -211,7 +213,7 @@ create table web_activity
 create table web_log
 (
     id          int(10) unsigned primary key auto_increment,
-    create_time datetime default null,
-    userid      int(10) not null,
-    log         text    not null
+    create_time datetime not null,
+    userid      int(10)  not null,
+    log         text     not null
 );
