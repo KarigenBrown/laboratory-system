@@ -6,6 +6,7 @@ import edu.bistu.domain.entity.WebMember;
 import edu.bistu.service.WebMemberService;
 import edu.bistu.utils.MinioUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,6 +31,7 @@ public class WebMemberController {
     @Autowired
     private MinioUtils minioUtils;
 
+    @PreAuthorize("hasAuthority('个人')")
     @GetMapping("/{userNumber}")
     public Response<WebMember> getMemberByNumber(@PathVariable("userNumber") String number) {
         return Response.ok(
@@ -39,6 +41,7 @@ public class WebMemberController {
         );
     }
 
+    @PreAuthorize("hasAuthority('个人')")
     @PostMapping("/photo")
     public Response<Map<String, String>> uploadPhoto(@RequestParam("photoName") String photoName,
                                                      @RequestPart("photo") MultipartFile file) {
@@ -48,6 +51,7 @@ public class WebMemberController {
         return Response.ok(Map.of("photoUrl", url));
     }
 
+    @PreAuthorize("hasAuthority('个人')")
     @PutMapping
     public Response<Object> putMemberById(@RequestBody WebMember member) {
         webMemberService.updateById(member);
@@ -56,11 +60,13 @@ public class WebMemberController {
 
     //--------------------------------------------------
 
+    @PreAuthorize("hasAuthority('人员管理')")
     @GetMapping("/all")
     public Response<List<WebMember>> getAllMembers() {
         return Response.ok(webMemberService.list());
     }
 
+    @PreAuthorize("hasAuthority('人员管理')")
     @GetMapping("/name/{name}")
     public Response<List<WebMember>> getMembersByName(@PathVariable("name") String name) {
         return Response.ok(
@@ -70,6 +76,7 @@ public class WebMemberController {
         );
     }
 
+    @PreAuthorize("hasAuthority('人员管理')")
     @GetMapping("/identity/{identity}")
     public Response<List<WebMember>> getMembersByIdentity(@PathVariable("identity") String identity) {
         return Response.ok(
@@ -79,12 +86,14 @@ public class WebMemberController {
         );
     }
 
+    @PreAuthorize("hasAuthority('人员管理')")
     @DeleteMapping("/{id}")
     public Response<Object> deleteMemberById(@PathVariable("id") Integer id) {
         webMemberService.removeById(id);
         return Response.ok();
     }
 
+    @PreAuthorize("hasAuthority('人员管理')")
     @PostMapping
     public Response<Object> postMember(@RequestBody WebMember member) {
         member.setPhotoUrl("");

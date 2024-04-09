@@ -35,7 +35,7 @@ CREATE TABLE `web_achievement`
     `link`                 varchar(100) DEFAULT '详情页链接',
     `papercode`            varchar(100) DEFAULT '代码',
     `theyear`              varchar(10)  DEFAULT '' COMMENT '论文年份',
-    `abstract`             text          COMMENT '摘要',
+    `abstract`             text COMMENT '摘要',
 
     category               varchar(100)     not null comment '类别',
     initials               varchar(255) default '' '论文首字母',
@@ -74,7 +74,7 @@ CREATE TABLE `web_manager`
     `id`        int(10) unsigned NOT NULL AUTO_INCREMENT,
     number      varchar(100)     not null comment '学工号',
     `username`  varchar(50)  DEFAULT '' COMMENT '账号',
-    `password`  varchar(50)  DEFAULT '' COMMENT '密码',
+    `password`  text COMMENT '密码',
 
     permits     varchar(100) default '个人' comment '权限',
 
@@ -101,8 +101,8 @@ CREATE TABLE `web_member`
     `name`                 varchar(100) DEFAULT '' COMMENT '姓名',
     `contact`              varchar(100) DEFAULT '' COMMENT '联系方式',
     `research`             varchar(100) DEFAULT '' COMMENT '研究方向',
-    `achievement`          text          COMMENT '科研成果',
-    `introduction`         text          COMMENT '个人经历',
+    `achievement`          text COMMENT '科研成果',
+    `introduction`         text COMMENT '个人经历',
 
     number                 varchar(100)            not null comment '学工号',
     grade                  varchar(50) comment '在校生年级',
@@ -181,10 +181,10 @@ create table web_demo
     time         date                    not null,
     `group`      varchar(255)            not null,
     introduction text                    not null,
-    video_urls   text          comment '换行分割',
-    photo_urls   text          comment '换行分割',
+    video_urls   text comment '换行分割',
+    photo_urls   text comment '换行分割',
     location     varchar(255) default '' not null,
-    content      text         ,
+    content      text,
     keywords     varchar(255) default '' not null comment ',分割',
 
     deleted      int(1)       default 0 comment '逻辑删除标志(0代表未删除,1代表已删除)',
@@ -198,7 +198,7 @@ create table web_activity
 (
     id           int(10) unsigned primary key auto_increment,
     title        varchar(255) not null,
-    urls         text     comment '换行分割',
+    urls         text comment '换行分割',
     introduction text         not null,
     content      text         not null,
     date         date         not null,

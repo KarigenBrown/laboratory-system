@@ -9,6 +9,7 @@ import edu.bistu.utils.MinioUtils;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,6 +23,7 @@ import java.util.Map;
  * @author makejava
  * @since 2024-04-06 16:28:42
  */
+@PreAuthorize("hasAuthority('Demo管理')")
 @RestController
 @RequestMapping("/webDemo")
 public class WebDemoController {
