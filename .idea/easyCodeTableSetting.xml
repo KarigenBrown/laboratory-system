@@ -714,6 +714,36 @@
             </TableInfoDTO>
           </value>
         </entry>
+        <entry key="web.web_raw_member">
+          <value>
+            <TableInfoDTO>
+              <option name="fullColumn">
+                <list>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="学工号" />
+                    <option name="custom" value="false" />
+                    <option name="ext" value="{}" />
+                    <option name="name" value="number" />
+                    <option name="type" value="java.lang.String" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="身份" />
+                    <option name="custom" value="false" />
+                    <option name="ext" value="{}" />
+                    <option name="name" value="identity" />
+                    <option name="type" value="java.lang.String" />
+                  </ColumnInfoDTO>
+                </list>
+              </option>
+              <option name="name" value="WebRawMember" />
+              <option name="preName" value="" />
+              <option name="saveModelName" value="web-framework" />
+              <option name="savePackageName" value="edu.bistu" />
+              <option name="savePath" value="./web-framework/src/main/java/edu/bistu" />
+              <option name="templateGroupName" value="MybatisPlus" />
+            </TableInfoDTO>
+          </value>
+        </entry>
         <entry key="web.web_visitors">
           <value>
             <TableInfoDTO>

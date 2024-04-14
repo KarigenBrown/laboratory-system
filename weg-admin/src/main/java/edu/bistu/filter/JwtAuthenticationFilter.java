@@ -3,6 +3,7 @@ package edu.bistu.filter;
 import edu.bistu.domain.entity.WebManager;
 import edu.bistu.utils.JwtUtils;
 import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -20,8 +21,11 @@ import java.util.Objects;
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
+//    @Autowired
+//    private HttpSession session;
+
     @Autowired
-    private HttpSession session;
+    private ServletContext context;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -35,7 +39,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         // 解析token
         String userid = JwtUtils.parseJWT(token).getSubject();
         // 从session中获取用户信息
-        WebManager loginManager = (WebManager) session.getAttribute(userid);
+//        WebManager loginManager = (WebManager) session.getAttribute(userid);
+        WebManager loginManager = (WebManager) context.getAttribute(userid);
         if (Objects.isNull(loginManager)) {
             throw new RuntimeException("用户未登录");
         }

@@ -3,14 +3,22 @@ package edu.bistu.controller;
 
 import edu.bistu.domain.Response;
 import edu.bistu.domain.entity.WebManager;
+import edu.bistu.domain.entity.WebMember;
+import edu.bistu.domain.entity.WebRawMember;
 import edu.bistu.service.WebManagerService;
+import edu.bistu.service.WebMemberService;
+import edu.bistu.service.WebRawMemberService;
 import edu.bistu.utils.JwtUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * (WebManager)表控制层
@@ -26,6 +34,17 @@ public class WebManagerController {
      */
     @Autowired
     private WebManagerService webManagerService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Lazy
+    @Autowired
+    private WebRawMemberService webRawMemberService;
+
+    @Lazy
+    @Autowired
+    private WebMemberService webMemberService;
 
     @GetMapping("/all")
     public Response<List<WebManager>> getAllWebManager() {
@@ -49,6 +68,9 @@ public class WebManagerController {
 
     @PutMapping
     public Response<Object> putManagerById(@RequestBody WebManager manager) {
+        if (manager.getUsername().equals(manager.getPassword())) {
+            manager.setPassword(passwordEncoder.encode(manager.getPassword()));
+        }
         webManagerService.updateById(manager);
         return Response.ok();
     }
@@ -60,11 +82,37 @@ public class WebManagerController {
         return Response.ok(webManagerService.login(manager));
     }
 
-    @GetMapping("/logout")
-    public Response<Object> logout(HttpServletRequest request){
+    @Transactional
+    @PostMapping("/register")
+    public Response<Object> register(@RequestBody Map<String, String> user) {
+        WebRawMember webRawMember = webRawMemberService.lambdaQuery()
+                .eq(WebRawMember::getNumber, user.get("number"))
+                .eq(WebRawMember::getIdentity, user.get("identity"))
+                .one();
+        if (Objects.isNull(webRawMember)) {
+            return Response.error(404, "用户未找到");
+        }
+
+        WebManager webManager = new WebManager()
+                .setUsername(user.get("username"))
+                .setPassword(passwordEncoder.encode(user.get("password")))
+                .setNumber(webRawMember.getNumber());
+        webManagerService.save(webManager);
+
+        WebMember webMember = new WebMember()
+                .setName(user.get("username"))
+                .setIdentity(webRawMember.getIdentity())
+                .setNumber(webRawMember.getNumber());
+        webMemberService.save(webMember);
+
+        return Response.ok();
+    }
+
+    @DeleteMapping("/logout")
+    public Response<Object> logout(HttpServletRequest request) {
         String token = request.getHeader("token");
         String userid = JwtUtils.parseJWT(token).getSubject();
-        request.getSession().removeAttribute(userid);
+        request.getServletContext().removeAttribute(userid);
         return Response.ok();
     }
 }

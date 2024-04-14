@@ -217,3 +217,9 @@ create table web_log
     userid      int(10)  not null,
     log         text     not null
 );
+
+create table web_raw_member
+(
+    number     varchar(100) primary key comment '学工号',
+    `identity` varchar(100) not null COMMENT '身份'
+);

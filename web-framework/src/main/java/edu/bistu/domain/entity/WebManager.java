@@ -4,19 +4,28 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
+import edu.bistu.service.WebMemberService;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
-import java.io.Serializable;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * (WebManager)实体类
@@ -31,6 +40,10 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class WebManager implements UserDetails {
+
+    @TableField(exist = false)
+    private String identity;
+
     private Integer id;
     @Schema(title = "学工号,即唯一标识")
     private String number;
@@ -63,9 +76,11 @@ public class WebManager implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.stream(this.permits.split(","))
+        List<SimpleGrantedAuthority> authorities = Arrays.stream(this.permits.split(","))
                 .map(SimpleGrantedAuthority::new)
-                .toList();
+                .collect(Collectors.toList());
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + this.identity));
+        return authorities;
     }
 
     @Override
@@ -85,7 +100,7 @@ public class WebManager implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return !"毕业生".equals(this.identity);
     }
 }
 

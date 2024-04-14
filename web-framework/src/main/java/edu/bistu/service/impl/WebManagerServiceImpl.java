@@ -2,10 +2,13 @@ package edu.bistu.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import edu.bistu.domain.entity.WebMember;
 import edu.bistu.mapper.WebManagerMapper;
 import edu.bistu.domain.entity.WebManager;
 import edu.bistu.service.WebManagerService;
+import edu.bistu.service.WebMemberService;
 import edu.bistu.utils.JwtUtils;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -33,8 +36,14 @@ public class WebManagerServiceImpl extends ServiceImpl<WebManagerMapper, WebMana
     @Autowired
     private AuthenticationManager authenticationManager;
 
+//    @Autowired
+//    private HttpSession session;
+
     @Autowired
-    private HttpSession session;
+    private ServletContext context;
+
+    @Autowired
+    private WebMemberService webMemberService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -48,7 +57,11 @@ public class WebManagerServiceImpl extends ServiceImpl<WebManagerMapper, WebMana
             throw new RuntimeException("用户名或者密码错误");
         }
 
-        // todo 查询对应的权限信息
+        // 查询对应的身份信息
+        String identity = webMemberService.lambdaQuery()
+                .eq(WebMember::getNumber, manager.getNumber())
+                .one().getIdentity();
+        manager.setIdentity(identity);
 
         // 把用户封装成UserDetails返回
         return manager;
@@ -71,10 +84,19 @@ public class WebManagerServiceImpl extends ServiceImpl<WebManagerMapper, WebMana
         String jwt = JwtUtils.createJWT(userid);
 
         // 把完整的用户信息存入session,userid作为key
-        session.setAttribute(userid, loginManager);
-        session.setMaxInactiveInterval(6 * 60 * 60);
+//        session.setAttribute(userid, loginManager);
+//        session.setMaxInactiveInterval(6 * 60 * 60);
+        context.setAttribute(userid, loginManager);
 
-        return Map.of("token", jwt, "number", loginManager.getNumber());
+        WebMember member = webMemberService.lambdaQuery()
+                .eq(WebMember::getNumber, loginManager.getNumber())
+                .one();
+        return Map.of(
+                "token", jwt,
+                "number", loginManager.getNumber(),
+                "identity", member.getIdentity(),
+                "permits", loginManager.getPermits()
+        );
     }
 }
 
