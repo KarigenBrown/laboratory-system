@@ -23,7 +23,7 @@ import java.util.Map;
  * @author makejava
  * @since 2024-04-06 16:28:42
  */
-@PreAuthorize("hasAuthority('Demo管理') || hasAnyRole('ROLE_教授', 'ROLE_副教授')")
+@PreAuthorize("hasAuthority('Demo管理') || hasAnyRole('ROLE_教授', 'ROLE_副教授', 'ROLE_讲师')")
 @RestController
 @RequestMapping("/webDemo")
 public class WebDemoController {

@@ -60,7 +60,7 @@ public class WebMemberController {
 
     //--------------------------------------------------
 
-    @PreAuthorize("hasAuthority('人员管理') || hasAnyRole('ROLE_教授', 'ROLE_副教授')")
+    @PreAuthorize("hasAuthority('人员管理') || hasAnyRole('ROLE_教授', 'ROLE_副教授', 'ROLE_讲师')")
     @GetMapping("/all")
     public Response<List<WebMember>> getAllMembers() {
         return Response.ok(webMemberService.list());
@@ -76,7 +76,7 @@ public class WebMemberController {
         );
     }
 
-    @PreAuthorize("hasAuthority('人员管理') || hasAnyRole('ROLE_教授', 'ROLE_副教授')")
+    @PreAuthorize("hasAuthority('人员管理') || hasAnyRole('ROLE_教授', 'ROLE_副教授', 'ROLE_讲师')")
     @GetMapping("/identity/{identity}")
     public Response<List<WebMember>> getMembersByIdentity(@PathVariable("identity") String identity) {
         return Response.ok(
@@ -86,14 +86,14 @@ public class WebMemberController {
         );
     }
 
-    @PreAuthorize("hasAuthority('人员管理') || hasAnyRole('ROLE_教授', 'ROLE_副教授')")
+    @PreAuthorize("hasAuthority('人员管理') || hasAnyRole('ROLE_教授', 'ROLE_副教授', 'ROLE_讲师')")
     @DeleteMapping("/{id}")
     public Response<Object> deleteMemberById(@PathVariable("id") Integer id) {
         webMemberService.removeById(id);
         return Response.ok();
     }
 
-    @PreAuthorize("hasAuthority('人员管理') || hasAnyRole('ROLE_教授', 'ROLE_副教授')")
+    @PreAuthorize("hasAuthority('人员管理') || hasAnyRole('ROLE_教授', 'ROLE_副教授', 'ROLE_讲师')")
     @PostMapping
     public Response<Object> postMember(@RequestBody WebMember member) {
         member.setPhotoUrl("");
