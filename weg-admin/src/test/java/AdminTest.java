@@ -1,5 +1,6 @@
 import edu.bistu.Admin;
 import edu.bistu.utils.JwtUtils;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -41,6 +42,28 @@ public class AdminTest {
         System.out.println("jwt = " + jwt);
         String subject = JwtUtils.parseJWT(jwt).getSubject();
         System.out.println("subject = " + subject);
+    }
+
+    @Test
+    public void testTextBlock() {
+        String url = "url";
+        String businessName = "businessName";
+        String httpMethod = "httpMethod";
+        String className = "className";
+        String methodName = "methodName";
+        String ip = "ip";
+        String args = "args";
+        String r = "result";
+        String log = """
+                URL          : %s
+                Business Name: %s
+                HTTP Method  : %s
+                Class Method : %s
+                IP           : %s
+                Args         : %s
+                Result       : %s
+                """.formatted(url, businessName, httpMethod, className + "." + methodName, ip, args, r);
+        System.out.println("log = " + log);
     }
 
 }

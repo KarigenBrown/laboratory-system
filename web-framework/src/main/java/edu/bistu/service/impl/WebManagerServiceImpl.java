@@ -60,7 +60,8 @@ public class WebManagerServiceImpl extends ServiceImpl<WebManagerMapper, WebMana
         // 查询对应的身份信息
         String identity = webMemberService.lambdaQuery()
                 .eq(WebMember::getNumber, manager.getNumber())
-                .one().getIdentity();
+                .one()
+                .getIdentity();
         manager.setIdentity(identity);
 
         // 把用户封装成UserDetails返回
