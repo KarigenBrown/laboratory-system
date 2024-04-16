@@ -2,6 +2,7 @@ package edu.bistu.controller;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.bistu.annotation.SystemLog;
 import edu.bistu.domain.Response;
 import edu.bistu.domain.entity.WebDemo;
 import edu.bistu.service.WebDemoService;
@@ -41,12 +42,14 @@ public class WebDemoController {
         return Response.ok(webDemoService.list());
     }
 
+    @SystemLog(businessName = "删除一个Demo")
     @DeleteMapping("/{id}")
     public Response<Object> deleteActivityById(@PathVariable("id") Integer id) {
         webDemoService.removeById(id);
         return Response.ok();
     }
 
+    @SystemLog(businessName = "新增照片")
     @SneakyThrows
     @PostMapping("/{title}/photo/upload")
     public Response<Map<String, String>> uploadPhoto(@PathVariable("title") String title,
@@ -65,6 +68,7 @@ public class WebDemoController {
         return Response.ok(Map.of("photoUrls", String.join("\n", photoUrls)));
     }
 
+    @SystemLog(businessName = "新增视频")
     @PostMapping("/{title}/video/upload")
     public Response<Map<String, String>> uploadVideo(@PathVariable("title") String title,
                                                      @RequestPart("videos") List<MultipartFile> files) {
@@ -95,12 +99,14 @@ public class WebDemoController {
         minioUtils.download("web", name, response);
     }
 
+    @SystemLog(businessName = "新增Demo")
     @PostMapping
     public Response<Map<String, Integer>> postDemo(@RequestBody WebDemo demo) {
         webDemoService.save(demo);
         return Response.ok(Map.of("id", demo.getId()));
     }
 
+    @SystemLog(businessName = "修改Demo")
     @PutMapping
     public Response<Object> putDemo(@RequestBody WebDemo demo) {
         webDemoService.updateById(demo);

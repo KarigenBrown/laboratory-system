@@ -1,12 +1,16 @@
 package edu.bistu.controller;
 
 
+import edu.bistu.annotation.SystemLog;
 import edu.bistu.domain.Response;
+import edu.bistu.domain.entity.WebManager;
 import edu.bistu.domain.entity.WebMember;
+import edu.bistu.service.WebManagerService;
 import edu.bistu.service.WebMemberService;
 import edu.bistu.utils.MinioUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,6 +35,9 @@ public class WebMemberController {
     @Autowired
     private MinioUtils minioUtils;
 
+    @Autowired
+    private WebManagerService webManagerService;
+
     @PreAuthorize("hasAuthority('个人')")
     @GetMapping("/{userNumber}")
     public Response<WebMember> getMemberByNumber(@PathVariable("userNumber") String number) {
@@ -41,6 +48,7 @@ public class WebMemberController {
         );
     }
 
+    @SystemLog(businessName = "修改个人头像")
     @PreAuthorize("hasAuthority('个人')")
     @PostMapping("/photo")
     public Response<Map<String, String>> uploadPhoto(@RequestParam("photoName") String photoName,
@@ -51,6 +59,7 @@ public class WebMemberController {
         return Response.ok(Map.of("photoUrl", url));
     }
 
+    @SystemLog(businessName = "修改个人信息")
     @PreAuthorize("hasAuthority('个人')")
     @PutMapping
     public Response<Object> putMemberById(@RequestBody WebMember member) {
@@ -86,13 +95,20 @@ public class WebMemberController {
         );
     }
 
+    @SystemLog(businessName = "删除成员")
     @PreAuthorize("hasAuthority('人员管理') || hasAnyRole('ROLE_教授', 'ROLE_副教授', 'ROLE_讲师')")
     @DeleteMapping("/{id}")
+    @Transactional
     public Response<Object> deleteMemberById(@PathVariable("id") Integer id) {
+        String number = webMemberService.getById(id).getNumber();
         webMemberService.removeById(id);
+        webManagerService.lambdaUpdate()
+                .eq(WebManager::getNumber, number)
+                .remove();
         return Response.ok();
     }
 
+    @SystemLog(businessName = "新增成员")
     @PreAuthorize("hasAuthority('人员管理') || hasAnyRole('ROLE_教授', 'ROLE_副教授', 'ROLE_讲师')")
     @PostMapping
     public Response<Object> postMember(@RequestBody WebMember member) {

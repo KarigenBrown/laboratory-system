@@ -1,6 +1,7 @@
 package edu.bistu.controller;
 
 
+import edu.bistu.annotation.SystemLog;
 import edu.bistu.domain.Response;
 import edu.bistu.domain.entity.WebActivity;
 import edu.bistu.domain.entity.WebProject;
@@ -33,18 +34,21 @@ public class WebProjectController {
         return Response.ok(webProjectService.list());
     }
 
+    @SystemLog(businessName = "删除项目")
     @DeleteMapping("/{id}")
     public Response<Object> deleteProjectById(@PathVariable("id") Integer id) {
         webProjectService.removeById(id);
         return Response.ok();
     }
 
+    @SystemLog(businessName = "新增项目")
     @PostMapping
     public Response<Map<String, Integer>> postProject(@RequestBody WebProject project) {
         webProjectService.save(project);
         return Response.ok(Map.of("id", project.getId()));
     }
 
+    @SystemLog(businessName = "更新项目")
     @PutMapping
     public Response<Object> putActivity(@RequestBody WebProject project) {
         webProjectService.updateById(project);

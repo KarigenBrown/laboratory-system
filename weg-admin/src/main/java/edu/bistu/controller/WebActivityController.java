@@ -1,6 +1,7 @@
 package edu.bistu.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.bistu.annotation.SystemLog;
 import edu.bistu.domain.Response;
 import edu.bistu.domain.entity.WebActivity;
 import edu.bistu.service.WebActivityService;
@@ -49,12 +50,14 @@ public class WebActivityController {
         );
     }
 
+    @SystemLog(businessName = "删除一个活动")
     @DeleteMapping("/{id}")
     public Response<Object> deleteActivityById(@PathVariable("id") Integer id) {
         webActivityService.removeById(id);
         return Response.ok();
     }
 
+    @SystemLog(businessName = "新增一张照片")
     @SneakyThrows
     @PostMapping("/{title}/photo/upload")
     public Response<Map<String, String>> uploadPhoto(@PathVariable("title") String title,
@@ -81,12 +84,14 @@ public class WebActivityController {
         minioUtils.download("web", name, response);
     }
 
+    @SystemLog(businessName = "新增一个活动")
     @PostMapping
     public Response<Map<String, Integer>> postActivity(@RequestBody WebActivity activity) {
         webActivityService.save(activity);
         return Response.ok(Map.of("id", activity.getId()));
     }
 
+    @SystemLog(businessName = "修改一个活动")
     @PutMapping
     public Response<Object> putActivity(@RequestBody WebActivity activity) {
         webActivityService.updateById(activity);

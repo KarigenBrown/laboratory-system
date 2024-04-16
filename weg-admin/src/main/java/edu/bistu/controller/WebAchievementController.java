@@ -1,6 +1,7 @@
 package edu.bistu.controller;
 
 
+import edu.bistu.annotation.SystemLog;
 import edu.bistu.domain.Response;
 import edu.bistu.domain.entity.WebAchievement;
 import edu.bistu.service.WebAchievementService;
@@ -41,18 +42,21 @@ public class WebAchievementController {
         );
     }
 
+    @SystemLog(businessName = "删除一个成就")
     @DeleteMapping("/{id}")
     public Response<Object> deleteAchievementById(@PathVariable("id") Integer id) {
         webAchievementService.removeById(id);
         return Response.ok();
     }
 
+    @SystemLog(businessName = "新增一个成就")
     @PostMapping
     public Response<Map<String, Integer>> postAchievement(@RequestBody WebAchievement achievement) {
         webAchievementService.save(achievement);
         return Response.ok(Map.of("id", achievement.getId()));
     }
 
+    @SystemLog(businessName = "修改一个成就")
     @PutMapping
     public Response<Object> putAchievement(@RequestBody WebAchievement achievement) {
         webAchievementService.updateById(achievement);

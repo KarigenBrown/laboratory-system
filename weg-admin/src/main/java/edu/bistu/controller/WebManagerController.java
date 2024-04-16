@@ -1,6 +1,7 @@
 package edu.bistu.controller;
 
 
+import edu.bistu.annotation.SystemLog;
 import edu.bistu.domain.Response;
 import edu.bistu.domain.entity.WebManager;
 import edu.bistu.domain.entity.WebMember;
@@ -51,9 +52,15 @@ public class WebManagerController {
         return Response.ok(webManagerService.list());
     }
 
+    @SystemLog(businessName = "删除成员")
     @DeleteMapping("/{id}")
+    @Transactional
     public Response<Object> deleteManagerById(@PathVariable("id") Integer id) {
+        String number = webManagerService.getById(id).getNumber();
         webManagerService.removeById(id);
+        webMemberService.lambdaUpdate()
+                .eq(WebMember::getNumber, number)
+                .remove();
         return Response.ok();
     }
 
@@ -66,6 +73,7 @@ public class WebManagerController {
         );
     }
 
+    @SystemLog(businessName = "修改一个成员")
     @PutMapping
     public Response<Object> putManagerById(@RequestBody WebManager manager) {
         if (manager.getUsername().equals(manager.getPassword())) {
@@ -77,6 +85,7 @@ public class WebManagerController {
 
     // ----------------------------------------------------------------
 
+    @SystemLog(businessName = "登录")
     @PostMapping("/login")
     public Response<Map<String, String>> login(@RequestBody WebManager manager) {
         return Response.ok(webManagerService.login(manager));
@@ -108,6 +117,7 @@ public class WebManagerController {
         return Response.ok();
     }
 
+    @SystemLog(businessName = "退出")
     @DeleteMapping("/logout")
     public Response<Object> logout(HttpServletRequest request) {
         String token = request.getHeader("token");
