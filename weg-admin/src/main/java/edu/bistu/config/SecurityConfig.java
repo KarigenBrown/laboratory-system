@@ -38,7 +38,7 @@ public class SecurityConfig {
                 .formLogin(formLogin -> formLogin.disable())
                 .authorizeHttpRequests(
                         authorizeHttpRequests -> authorizeHttpRequests
-                                .requestMatchers("/webManager/login/**").anonymous()
+                                .requestMatchers("/webManager/login").anonymous()
                                 .requestMatchers("/webManager/register").anonymous()
                                 .anyRequest().authenticated()
                 ).logout(logout -> logout.disable())

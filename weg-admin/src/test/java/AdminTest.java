@@ -1,4 +1,7 @@
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.bistu.Admin;
+import edu.bistu.domain.entity.WebManager;
 import edu.bistu.utils.JwtUtils;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.junit.jupiter.api.Test;
@@ -14,6 +17,9 @@ public class AdminTest {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Test
     public void testStream() {
@@ -64,6 +70,15 @@ public class AdminTest {
                 Result       : %s
                 """.formatted(url, businessName, httpMethod, className + "." + methodName, ip, args, r);
         System.out.println("log = " + log);
+    }
+
+    @Test
+    public void testObjectMapper() throws JsonProcessingException {
+        WebManager webManager = new WebManager()
+                .setUsername("karigen")
+                .setPassword("123456");
+        String json = objectMapper.writeValueAsString(webManager);
+        System.out.println("json = " + json);
     }
 
 }

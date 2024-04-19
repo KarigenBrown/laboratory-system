@@ -4,6 +4,9 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import edu.bistu.service.WebMemberService;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.annotation.PostConstruct;
@@ -54,6 +57,7 @@ public class WebManager implements UserDetails {
     /**
      * 密码
      */
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     /**
      * 权限
@@ -75,7 +79,11 @@ public class WebManager implements UserDetails {
     private Date updateTime;
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        if (permits == null) {
+            return null;
+        }
         List<SimpleGrantedAuthority> authorities = Arrays.stream(this.permits.split(","))
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());

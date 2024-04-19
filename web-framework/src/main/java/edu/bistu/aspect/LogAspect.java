@@ -52,7 +52,7 @@ public class LogAspect {
     private void beforeProceed(ProceedingJoinPoint joinPoint) {
     }
 
-    private void afterProceed(ProceedingJoinPoint joinPoint, Object result) throws JsonProcessingException {
+    private void afterProceed(ProceedingJoinPoint joinPoint, Object result) {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         String url = request.getRequestURL().toString();
         String businessName = getSystemLog(joinPoint).businessName();
@@ -60,8 +60,14 @@ public class LogAspect {
         String className = joinPoint.getSignature().getDeclaringTypeName();
         String methodName = ((MethodSignature) joinPoint.getSignature()).getName();
         String ip = request.getRemoteHost();
-        String args = objectMapper.writeValueAsString(joinPoint.getArgs());
-        String r = objectMapper.writeValueAsString(result);
+        String args = null;
+        String r = null;
+        try {
+            args = objectMapper.writeValueAsString(joinPoint.getArgs());
+            r = objectMapper.writeValueAsString(result);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
         String log = """
                 URL          : %s
                 Business Name: %s
