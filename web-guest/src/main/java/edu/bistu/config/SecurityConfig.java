@@ -21,11 +21,6 @@ public class SecurityConfig {
                 ).logout(logout -> logout.disable())
                 .cors(Customizer.withDefaults());
 
-        // 配置异常处理器
-        // httpSecurity.exceptionHandling()
-        //         .authenticationEntryPoint(authenticationEntryPoint)
-        //         .accessDeniedHandler(accessDeniedHandler);
-
         return httpSecurity.build();
     }
 }

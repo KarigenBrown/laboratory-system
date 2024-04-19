@@ -15,10 +15,6 @@ import java.io.InputStream;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
-/**
- * @author Karigen B
- * @create 2022-11-08 23:25
- */
 @Component
 public class MinioUtils {
     @Autowired

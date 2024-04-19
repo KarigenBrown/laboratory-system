@@ -37,13 +37,10 @@ public class LogAspect {
 
     @Around("pointCut()")
     public Object pointAspect(ProceedingJoinPoint joinPoint) throws Throwable {
-        Object result;
-        try {
-            beforeProceed(joinPoint);
-            result = joinPoint.proceed();
-            afterProceed(joinPoint, result);
-        } finally {
-        }
+        beforeProceed(joinPoint);
+        Object result = joinPoint.proceed();
+        afterProceed(joinPoint, result);
+
         return result;
     }
 

@@ -6,6 +6,8 @@ import edu.bistu.domain.Response;
 import edu.bistu.domain.entity.WebManager;
 import edu.bistu.domain.entity.WebMember;
 import edu.bistu.domain.entity.WebRawMember;
+import edu.bistu.enums.HttpCodeEnum;
+import edu.bistu.exeception.SystemException;
 import edu.bistu.service.WebManagerService;
 import edu.bistu.service.WebMemberService;
 import edu.bistu.service.WebRawMemberService;
@@ -99,7 +101,7 @@ public class WebManagerController {
                 .eq(WebRawMember::getIdentity, user.get("identity"))
                 .one();
         if (Objects.isNull(webRawMember)) {
-            return Response.error(404, "用户未找到");
+            throw new SystemException(HttpCodeEnum.USER_NOT_EXIST);
         }
 
         WebManager webManager = new WebManager()

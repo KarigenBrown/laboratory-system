@@ -14,10 +14,6 @@ import javax.crypto.spec.SecretKeySpec;
 import java.util.Base64;
 import java.util.Date;
 
-/**
- * @author Karigen B
- * @create 2022-11-02 20:16
- */
 public class JwtUtils {
     public static final Long JWT_TTL = 24 * 60 * 60 * 1_000L;
     public static final String JWT_KEY = "eyJhbGciOiJIUzI1NiJ9eyJqdGkiOiJjYWM2ZDVhZi1mNjVlLTQ0MDAtYjcxMi0zYWEwOGIyOTIwYjQiLCJzdWIiOiJzZyIsImlzcyI6InNnIiwiaWF0IjoxNjM4MTA2NzEyLCJleHAiOjE2MzgxMTAzMTJ9JVsSbkP94wuczb4QryQbAke3ysBDIL5ou8fWsbtebg";

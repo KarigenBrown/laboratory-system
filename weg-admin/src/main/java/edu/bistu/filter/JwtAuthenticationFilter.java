@@ -1,6 +1,8 @@
 package edu.bistu.filter;
 
 import edu.bistu.domain.entity.WebManager;
+import edu.bistu.enums.HttpCodeEnum;
+import edu.bistu.exeception.SystemException;
 import edu.bistu.utils.JwtUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletContext;
@@ -21,9 +23,6 @@ import java.util.Objects;
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-//    @Autowired
-//    private HttpSession session;
-
     @Autowired
     private ServletContext context;
 
@@ -38,11 +37,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
         // 解析token
         String userid = JwtUtils.parseJWT(token).getSubject();
-        // 从session中获取用户信息
-//        WebManager loginManager = (WebManager) session.getAttribute(userid);
+        // 从servlent context中获取用户信息
         WebManager loginManager = (WebManager) context.getAttribute(userid);
         if (Objects.isNull(loginManager)) {
-            throw new RuntimeException("用户未登录");
+            throw new SystemException(HttpCodeEnum.NEED_LOGIN);
         }
         // 存入SecurityContextHolder
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginManager, null, loginManager.getAuthorities());

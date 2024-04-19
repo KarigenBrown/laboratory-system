@@ -50,11 +50,6 @@ public class SecurityConfig {
                                 .accessDeniedHandler(accessDeniedHandler)
                 );
 
-        // 配置异常处理器
-        // httpSecurity.exceptionHandling()
-        //         .authenticationEntryPoint(authenticationEntryPoint)
-        //         .accessDeniedHandler(accessDeniedHandler);
-
         return httpSecurity.build();
     }
 }

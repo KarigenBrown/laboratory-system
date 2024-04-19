@@ -3,10 +3,6 @@ package edu.bistu.enums;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-/**
- * @author Karigen B
- * @create 2022-10-29 20:11
- */
 @Getter
 @AllArgsConstructor
 public enum HttpCodeEnum {
@@ -27,7 +23,8 @@ public enum HttpCodeEnum {
     PASSWORD_NOT_NULL(510, "密码不能为空"),
     EMAIL_NOT_NULL(511, "邮箱不能为空"),
     NICKNAME_EXIST(512, "昵称已存在"),
-    LOGIN_ERROR(505, "用户名或密码错误");
+    LOGIN_ERROR(505, "用户名或密码错误"),
+    USER_NOT_EXIST(513, "用户不存在");
 
     private final int code;
     private final String message;

@@ -6,10 +6,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/**
- * @author Karigen B
- * @create 2022-11-08 23:27
- */
 @Data
 @Configuration
 @ConfigurationProperties(prefix = "minio")

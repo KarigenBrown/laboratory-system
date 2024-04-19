@@ -7,10 +7,6 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
-/**
- * @author Karigen B
- * @create 2022-10-29 20:00
- */
 @Data
 @Accessors(chain = true)
 @NoArgsConstructor

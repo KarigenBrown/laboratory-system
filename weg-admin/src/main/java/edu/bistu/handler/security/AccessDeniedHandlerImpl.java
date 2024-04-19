@@ -4,6 +4,8 @@ import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.http.ContentType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.bistu.domain.Response;
+import edu.bistu.enums.HttpCodeEnum;
+import edu.bistu.utils.WebUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,15 +24,9 @@ public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
-        Response<Object> myResponse = Response.error(403, "无权限操作");
-
-        response.setStatus(200);
-        response.setContentType(ContentType.JSON.toString());
-        response.setCharacterEncoding(CharsetUtil.UTF_8);
-        try {
-            response.getWriter().print(objectMapper.writeValueAsString(myResponse));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        accessDeniedException.printStackTrace();
+        Response<Object> result = Response.error(HttpCodeEnum.NO_OPERATOR_AUTH);
+        // 响应给前端
+        WebUtils.renderString(response, objectMapper.writeValueAsString(result));
     }
 }

@@ -3,6 +3,8 @@ package edu.bistu.service.impl;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import edu.bistu.domain.entity.WebMember;
+import edu.bistu.enums.HttpCodeEnum;
+import edu.bistu.exeception.SystemException;
 import edu.bistu.mapper.WebManagerMapper;
 import edu.bistu.domain.entity.WebManager;
 import edu.bistu.service.WebManagerService;
@@ -36,9 +38,6 @@ public class WebManagerServiceImpl extends ServiceImpl<WebManagerMapper, WebMana
     @Autowired
     private AuthenticationManager authenticationManager;
 
-//    @Autowired
-//    private HttpSession session;
-
     @Autowired
     private ServletContext context;
 
@@ -54,7 +53,7 @@ public class WebManagerServiceImpl extends ServiceImpl<WebManagerMapper, WebMana
         );
         // 如果没有查询到用户
         if (Objects.isNull(manager)) {
-            throw new RuntimeException("用户名或者密码错误");
+            throw new SystemException(HttpCodeEnum.LOGIN_ERROR);
         }
 
         // 查询对应的身份信息
@@ -76,7 +75,7 @@ public class WebManagerServiceImpl extends ServiceImpl<WebManagerMapper, WebMana
 
         // 如果认证没通过,给出对应的提示
         if (Objects.isNull(authentication)) {
-            throw new RuntimeException("登录失败");
+            throw new SystemException(HttpCodeEnum.LOGIN_ERROR);
         }
 
         // 如果认证通过了,使用userid生成一个jwt,返回jwt
@@ -84,9 +83,7 @@ public class WebManagerServiceImpl extends ServiceImpl<WebManagerMapper, WebMana
         String userid = loginManager.getId().toString();
         String jwt = JwtUtils.createJWT(userid);
 
-        // 把完整的用户信息存入session,userid作为key
-//        session.setAttribute(userid, loginManager);
-//        session.setMaxInactiveInterval(6 * 60 * 60);
+        // 把完整的用户信息存入servlet context,userid作为key
         context.setAttribute(userid, loginManager);
 
         WebMember member = webMemberService.lambdaQuery()
