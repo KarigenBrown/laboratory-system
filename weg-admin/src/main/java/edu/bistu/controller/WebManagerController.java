@@ -1,6 +1,7 @@
 package edu.bistu.controller;
 
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import edu.bistu.annotation.SystemLog;
 import edu.bistu.domain.Response;
 import edu.bistu.domain.entity.WebManager;
@@ -49,9 +50,14 @@ public class WebManagerController {
     @Autowired
     private WebMemberService webMemberService;
 
-    @GetMapping("/all")
-    public Response<List<WebManager>> getAllWebManager() {
-        return Response.ok(webManagerService.list());
+    @GetMapping("/all/{pageSize}/{currentPage}")
+    public Response<Map<String, Object>> getAllWebManager(@PathVariable("pageSize") Integer pageSize,
+                                                          @PathVariable("currentPage") Integer currentPage) {
+        Page<WebManager> page = webManagerService.page(new Page<>(currentPage, pageSize));
+        return Response.ok(Map.of(
+                "rows", page.getRecords(),
+                "total", page.getTotal()
+        ));
     }
 
     @SystemLog(businessName = "删除成员")

@@ -1,5 +1,6 @@
 package edu.bistu.domain.entity;
 
+import com.alibaba.excel.annotation.ExcelProperty;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
@@ -18,14 +19,15 @@ import java.io.Serializable;
  */
 @Data
 @TableName("web_raw_member")
-@Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class WebRawMember {
     //学工号
     @TableId
+    @ExcelProperty("学工号")
     private String number;
     //身份
+    @ExcelProperty("身份")
     private String identity;
 
 }

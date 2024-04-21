@@ -1,9 +1,11 @@
 package edu.bistu.controller;
 
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.bistu.annotation.SystemLog;
 import edu.bistu.domain.Response;
+import edu.bistu.domain.entity.WebActivity;
 import edu.bistu.domain.entity.WebDemo;
 import edu.bistu.service.WebDemoService;
 import edu.bistu.utils.MinioUtils;
@@ -37,9 +39,23 @@ public class WebDemoController {
     @Autowired
     private MinioUtils minioUtils;
 
-    @GetMapping("/all")
-    public Response<List<WebDemo>> getAllDemos() {
-        return Response.ok(webDemoService.list());
+    @GetMapping("/all/{pageSize}/{currentPage}")
+    public Response<Map<String, Object>> getAllDemos(@PathVariable("pageSize") Integer pageSize,
+                                               @PathVariable("currentPage") Integer currentPage) {
+        Page<WebDemo> page = webDemoService.page(new Page<>(currentPage, pageSize));
+        return Response.ok(Map.of(
+                "rows", page.getRecords(),
+                "total", page.getTotal()
+        ));
+    }
+
+    @GetMapping("/{title}")
+    public Response<List<WebDemo>> getDemosByTitle(@PathVariable("title") String title) {
+        return Response.ok(
+                webDemoService.lambdaQuery()
+                        .like(WebDemo::getTitle, title)
+                        .list()
+        );
     }
 
     @SystemLog(businessName = "删除一个Demo")

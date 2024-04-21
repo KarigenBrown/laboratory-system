@@ -1,9 +1,11 @@
 package edu.bistu.controller;
 
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import edu.bistu.annotation.SystemLog;
 import edu.bistu.domain.Response;
 import edu.bistu.domain.entity.WebActivity;
+import edu.bistu.domain.entity.WebMember;
 import edu.bistu.domain.entity.WebProject;
 import edu.bistu.service.WebProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +31,14 @@ public class WebProjectController {
     @Autowired
     private WebProjectService webProjectService;
 
-    @GetMapping("/all")
-    public Response<List<WebProject>> getAllProjects() {
-        return Response.ok(webProjectService.list());
+    @GetMapping("/all/{pageSize}/{currentPage}")
+    public Response<Map<String, Object>> getAllProjects(@PathVariable("pageSize") Integer pageSize,
+                                                        @PathVariable("currentPage") Integer currentPage) {
+        Page<WebProject> page = webProjectService.page(new Page<>(currentPage, pageSize));
+        return Response.ok(Map.of(
+                "rows", page.getRecords(),
+                "total", page.getTotal()
+        ));
     }
 
     @SystemLog(businessName = "删除项目")

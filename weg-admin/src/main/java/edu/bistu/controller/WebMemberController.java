@@ -1,8 +1,10 @@
 package edu.bistu.controller;
 
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import edu.bistu.annotation.SystemLog;
 import edu.bistu.domain.Response;
+import edu.bistu.domain.entity.WebLog;
 import edu.bistu.domain.entity.WebManager;
 import edu.bistu.domain.entity.WebMember;
 import edu.bistu.service.WebManagerService;
@@ -70,9 +72,14 @@ public class WebMemberController {
     //--------------------------------------------------
 
     @PreAuthorize("hasAuthority('人员管理') || hasAnyRole('ROLE_教授', 'ROLE_副教授', 'ROLE_讲师')")
-    @GetMapping("/all")
-    public Response<List<WebMember>> getAllMembers() {
-        return Response.ok(webMemberService.list());
+    @GetMapping("/all/{pageSize}/{currentPage}")
+    public Response<Map<String, Object>> getAllMembers(@PathVariable("pageSize") Integer pageSize,
+                                                       @PathVariable("currentPage") Integer currentPage) {
+        Page<WebMember> page = webMemberService.page(new Page<>(currentPage, pageSize));
+        return Response.ok(Map.of(
+                "rows", page.getRecords(),
+                "total", page.getTotal()
+        ));
     }
 
     @PreAuthorize("hasAuthority('人员管理')")
@@ -86,13 +93,17 @@ public class WebMemberController {
     }
 
     @PreAuthorize("hasAuthority('人员管理') || hasAnyRole('ROLE_教授', 'ROLE_副教授', 'ROLE_讲师')")
-    @GetMapping("/identity/{identity}")
-    public Response<List<WebMember>> getMembersByIdentity(@PathVariable("identity") String identity) {
-        return Response.ok(
-                webMemberService.lambdaQuery()
-                        .eq(WebMember::getIdentity, identity)
-                        .list()
-        );
+    @GetMapping("/identity/{identity}/{pageSize}/{currentPage}")
+    public Response<Map<String, Object>> getMembersByIdentity(@PathVariable("pageSize") Integer pageSize,
+                                                          @PathVariable("currentPage") Integer currentPage,
+                                                          @PathVariable("identity") String identity) {
+        Page<WebMember> page = webMemberService.lambdaQuery()
+                .eq(WebMember::getIdentity, identity)
+                .page(new Page<>(currentPage, pageSize));
+        return Response.ok(Map.of(
+                "rows", page.getRecords(),
+                "total", page.getTotal()
+        ));
     }
 
     @SystemLog(businessName = "删除成员")

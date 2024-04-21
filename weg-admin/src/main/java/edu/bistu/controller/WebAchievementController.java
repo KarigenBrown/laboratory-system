@@ -1,6 +1,7 @@
 package edu.bistu.controller;
 
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import edu.bistu.annotation.SystemLog;
 import edu.bistu.domain.Response;
 import edu.bistu.domain.entity.WebAchievement;
@@ -28,18 +29,17 @@ public class WebAchievementController {
     @Autowired
     private WebAchievementService webAchievementService;
 
-    @GetMapping("/all")
-    public Response<List<WebAchievement>> getAllAchievements() {
-        return Response.ok(webAchievementService.list());
-    }
-
-    @GetMapping("/{category}/all")
-    public Response<List<WebAchievement>> getAllAchievementsByCategory(@PathVariable("category") String category) {
-        return Response.ok(
-                webAchievementService.lambdaQuery()
-                        .eq(WebAchievement::getCategory, category)
-                        .list()
-        );
+    @GetMapping("/{category}/all/{pageSize}/{currentPage}")
+    public Response<Map<String, Object>> getAllAchievementsByCategory(@PathVariable("pageSize") Integer pageSize,
+                                                                       @PathVariable("currentPage") Integer currentPage,
+                                                                       @PathVariable("category") String category) {
+        Page<WebAchievement> page = webAchievementService.lambdaQuery()
+                .eq(WebAchievement::getCategory, category)
+                .page(new Page<>(currentPage, pageSize));
+        return Response.ok(Map.of(
+                "rows", page.getRecords(),
+                "total", page.getTotal()
+        ));
     }
 
     @SystemLog(businessName = "删除一个成就")

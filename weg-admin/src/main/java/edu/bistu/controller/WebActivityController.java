@@ -1,9 +1,11 @@
 package edu.bistu.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.bistu.annotation.SystemLog;
 import edu.bistu.domain.Response;
 import edu.bistu.domain.entity.WebActivity;
+import edu.bistu.domain.entity.WebLog;
 import edu.bistu.service.WebActivityService;
 import edu.bistu.utils.MinioUtils;
 import jakarta.servlet.http.HttpServletResponse;
@@ -36,9 +38,14 @@ public class WebActivityController {
     @Autowired
     private MinioUtils minioUtils;
 
-    @GetMapping("/all")
-    public Response<List<WebActivity>> getAllActivities() {
-        return Response.ok(webActivityService.list());
+    @GetMapping("/all/{pageSize}/{currentPage}")
+    public Response<Map<String, Object>> getAllActivities(@PathVariable("pageSize") Integer pageSize,
+                                                        @PathVariable("currentPage") Integer currentPage) {
+        Page<WebActivity> page = webActivityService.page(new Page<>(currentPage, pageSize));
+        return Response.ok(Map.of(
+                "rows", page.getRecords(),
+                "total", page.getTotal()
+        ));
     }
 
     @GetMapping("/{title}")

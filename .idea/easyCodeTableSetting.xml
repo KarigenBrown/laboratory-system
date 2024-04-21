@@ -737,9 +737,9 @@
               </option>
               <option name="name" value="WebRawMember" />
               <option name="preName" value="" />
-              <option name="saveModelName" value="web-framework" />
+              <option name="saveModelName" value="weg-admin" />
               <option name="savePackageName" value="edu.bistu" />
-              <option name="savePath" value="./web-framework/src/main/java/edu/bistu" />
+              <option name="savePath" value="./weg-admin/src/main/java/edu/bistu" />
               <option name="templateGroupName" value="MybatisPlus" />
             </TableInfoDTO>
           </value>

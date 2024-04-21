@@ -1,15 +1,15 @@
 package edu.bistu.controller;
 
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import edu.bistu.domain.Response;
 import edu.bistu.domain.entity.WebLog;
 import edu.bistu.service.WebLogService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * (WebLog)表控制层
@@ -26,9 +26,14 @@ public class WebLogController {
     @Autowired
     private WebLogService webLogService;
 
-    @GetMapping("/all")
-    Response<List<WebLog>> getAllLogs() {
-        return Response.ok(webLogService.list());
+    @GetMapping("/all/{pageSize}/{currentPage}")
+    Response<Map<String, Object>> getAllLogs(@PathVariable("pageSize") Integer pageSize,
+                                             @PathVariable("currentPage") Integer currentPage) {
+        Page<WebLog> page = webLogService.page(new Page<>(currentPage, pageSize));
+        return Response.ok(Map.of(
+                "rows", page.getRecords(),
+                "total", page.getTotal()
+        ));
     }
 }
 

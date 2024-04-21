@@ -1,14 +1,22 @@
+import cn.hutool.core.io.IoUtil;
+import com.alibaba.excel.EasyExcel;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.bistu.Admin;
 import edu.bistu.domain.entity.WebManager;
+import edu.bistu.domain.entity.WebRawMember;
+import edu.bistu.handler.listener.WebRawMemberListener;
+import edu.bistu.service.WebRawMemberService;
 import edu.bistu.utils.JwtUtils;
+import org.apache.commons.io.IOUtils;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,6 +28,9 @@ public class AdminTest {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @Autowired
+    private WebRawMemberService webRawMemberService;
 
     @Test
     public void testStream() {
@@ -79,6 +90,19 @@ public class AdminTest {
                 .setPassword("123456");
         String json = objectMapper.writeValueAsString(webManager);
         System.out.println("json = " + json);
+    }
+
+    @Test
+    public void testExcel() {
+//        String filePath = "C:\\Users\\KarigenBrown\\Desktop\\2.xlsx";
+
+//        List<WebRawMember> list = new ArrayList<>();
+//        for (int i = 0; i < 10; i++) {
+//            list.add(new WebRawMember(i + "", i + ""));
+//        }
+//        EasyExcel.write(filePath, WebRawMember.class).sheet().doWrite(list);
+
+//        EasyExcel.read(filePath, WebRawMember.class, new WebRawMemberListener(webRawMemberService)).sheet(0).doRead();
     }
 
 }
