@@ -13,6 +13,7 @@ import edu.bistu.service.WebManagerService;
 import edu.bistu.service.WebMemberService;
 import edu.bistu.service.WebRawMemberService;
 import edu.bistu.utils.JwtUtils;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -30,6 +31,7 @@ import java.util.Objects;
  * @author makejava
  * @since 2024-04-03 13:24:43
  */
+@RateLimiter(name = "default")
 @RestController
 @RequestMapping("/webManager")
 public class WebManagerController {

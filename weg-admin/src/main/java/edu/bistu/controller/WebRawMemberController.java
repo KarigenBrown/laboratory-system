@@ -7,6 +7,7 @@ import edu.bistu.domain.Response;
 import edu.bistu.domain.entity.WebRawMember;
 import edu.bistu.handler.listener.WebRawMemberListener;
 import edu.bistu.service.WebRawMemberService;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @author makejava
  * @since 2024-04-21 23:00:38
  */
+@RateLimiter(name = "default")
 @PreAuthorize("hasAuthority('人员管理') || hasAnyRole('ROLE_教授', 'ROLE_副教授', 'ROLE_讲师')")
 @RestController
 @RequestMapping("/webRawMember")

@@ -10,6 +10,7 @@ import edu.bistu.domain.entity.WebMember;
 import edu.bistu.service.WebManagerService;
 import edu.bistu.service.WebMemberService;
 import edu.bistu.utils.MinioUtils;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +26,7 @@ import java.util.Map;
  * @author makejava
  * @since 2024-04-03 14:12:15
  */
+@RateLimiter(name = "default")
 @RestController
 @RequestMapping("/webMember")
 public class WebMemberController {

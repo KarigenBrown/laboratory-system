@@ -27,3 +27,12 @@ minio:
   bucket-name: web
   access-key: minioadmin
   secret-key: minioadmin
+resilience4j:
+  ratelimiter:
+    metrics:
+      enabled: true
+    instances:
+      default:
+        limit-for-period: 2
+        limit-refresh-period: 1s
+        timeout-duration: 1

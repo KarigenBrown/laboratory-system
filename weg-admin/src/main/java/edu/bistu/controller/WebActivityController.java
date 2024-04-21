@@ -8,6 +8,7 @@ import edu.bistu.domain.entity.WebActivity;
 import edu.bistu.domain.entity.WebLog;
 import edu.bistu.service.WebActivityService;
 import edu.bistu.utils.MinioUtils;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ import java.util.Map;
  * @author makejava
  * @since 2024-04-05 13:55:08
  */
+@RateLimiter(name = "default")
 @PreAuthorize("hasAuthority('活动管理') || hasAnyRole('ROLE_教授', 'ROLE_副教授', 'ROLE_讲师')")
 @RestController
 @RequestMapping("/webActivity")

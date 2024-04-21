@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import edu.bistu.domain.Response;
 import edu.bistu.domain.entity.WebLog;
 import edu.bistu.service.WebLogService;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +18,7 @@ import java.util.Map;
  * @author makejava
  * @since 2024-03-20 19:57:05
  */
+@RateLimiter(name = "default")
 @RestController
 @RequestMapping("/webLog")
 public class WebLogController {
