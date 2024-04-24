@@ -66,7 +66,7 @@ public class LogAspect {
             args = objectMapper.writeValueAsString(joinPoint.getArgs());
             r = objectMapper.writeValueAsString(result);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            System.out.println("日志错误,可忽略");
         }
         String log = """
                 URL          : %s

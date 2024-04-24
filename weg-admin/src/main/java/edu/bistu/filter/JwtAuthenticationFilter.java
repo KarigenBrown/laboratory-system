@@ -4,6 +4,7 @@ import edu.bistu.domain.entity.WebManager;
 import edu.bistu.enums.HttpCodeEnum;
 import edu.bistu.exeception.SystemException;
 import edu.bistu.utils.JwtUtils;
+import edu.bistu.utils.RedisCache;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
@@ -26,6 +27,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private ServletContext context;
 
+    @Autowired
+    private RedisCache redisCache;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         // 获取token
@@ -38,7 +42,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         // 解析token
         String userid = JwtUtils.parseJWT(token).getSubject();
         // 从servlent context中获取用户信息
-        WebManager loginManager = (WebManager) context.getAttribute(userid);
+        // WebManager loginManager = (WebManager) context.getAttribute(userid);
+        // 从redis中获取
+        WebManager loginManager = redisCache.getCacheObject(userid);
         if (Objects.isNull(loginManager)) {
             throw new SystemException(HttpCodeEnum.NEED_LOGIN);
         }

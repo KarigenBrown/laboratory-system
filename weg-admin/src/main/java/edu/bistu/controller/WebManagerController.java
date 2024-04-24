@@ -13,6 +13,7 @@ import edu.bistu.service.WebManagerService;
 import edu.bistu.service.WebMemberService;
 import edu.bistu.service.WebRawMemberService;
 import edu.bistu.utils.JwtUtils;
+import edu.bistu.utils.RedisCache;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,9 @@ public class WebManagerController {
     @Lazy
     @Autowired
     private WebMemberService webMemberService;
+
+    @Autowired
+    private RedisCache redisCache;
 
     @PreAuthorize("hasAuthority('权限管理') || hasAnyRole('ROLE_教授', 'ROLE_副教授', 'ROLE_讲师')")
     @GetMapping("/all/{pageSize}/{currentPage}")
@@ -137,7 +141,8 @@ public class WebManagerController {
     public Response<Object> logout(HttpServletRequest request) {
         String token = request.getHeader("token");
         String userid = JwtUtils.parseJWT(token).getSubject();
-        request.getServletContext().removeAttribute(userid);
+        // request.getServletContext().removeAttribute(userid);
+        redisCache.deleteCacheObject(userid);
         return Response.ok();
     }
 }

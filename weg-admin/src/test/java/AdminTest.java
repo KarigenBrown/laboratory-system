@@ -6,8 +6,10 @@ import edu.bistu.Admin;
 import edu.bistu.domain.entity.WebManager;
 import edu.bistu.domain.entity.WebRawMember;
 import edu.bistu.handler.listener.WebRawMemberListener;
+import edu.bistu.service.WebManagerService;
 import edu.bistu.service.WebRawMemberService;
 import edu.bistu.utils.JwtUtils;
+import edu.bistu.utils.RedisCache;
 import org.apache.commons.io.IOUtils;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.junit.jupiter.api.Test;
@@ -31,6 +33,12 @@ public class AdminTest {
 
     @Autowired
     private WebRawMemberService webRawMemberService;
+
+    @Autowired
+    private RedisCache redisCache;
+
+    @Autowired
+    private WebManagerService webManagerService;
 
     @Test
     public void testStream() {
@@ -103,6 +111,17 @@ public class AdminTest {
 //        EasyExcel.write(filePath, WebRawMember.class).sheet().doWrite(list);
 
 //        EasyExcel.read(filePath, WebRawMember.class, new WebRawMemberListener(webRawMemberService)).sheet(0).doRead();
+    }
+
+    @Test
+    public void testRedis() {
+        WebManager manager = webManagerService.getById(4);
+        String userid = manager.getId().toString();
+        redisCache.setCacheObject(userid, manager);
+        WebManager cachedManager = redisCache.getCacheObject(userid);
+        System.out.println("manager.equals(cachedManager) = " + manager.equals(cachedManager));
+        System.out.println("cachedManager = " + cachedManager);
+        redisCache.deleteCacheObject(userid);
     }
 
 }

@@ -10,6 +10,7 @@ import edu.bistu.domain.entity.WebManager;
 import edu.bistu.service.WebManagerService;
 import edu.bistu.service.WebMemberService;
 import edu.bistu.utils.JwtUtils;
+import edu.bistu.utils.RedisCache;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,9 @@ public class WebManagerServiceImpl extends ServiceImpl<WebManagerMapper, WebMana
 
     @Autowired
     private ServletContext context;
+
+    @Autowired
+    private RedisCache redisCache;
 
     @Autowired
     private WebMemberService webMemberService;
@@ -84,7 +88,9 @@ public class WebManagerServiceImpl extends ServiceImpl<WebManagerMapper, WebMana
         String jwt = JwtUtils.createJWT(userid);
 
         // 把完整的用户信息存入servlet context,userid作为key
-        context.setAttribute(userid, loginManager);
+        // context.setAttribute(userid, loginManager);
+        // 存入redis
+        redisCache.setCacheObject(userid, loginManager);
 
         WebMember member = webMemberService.lambdaQuery()
                 .eq(WebMember::getNumber, loginManager.getNumber())
