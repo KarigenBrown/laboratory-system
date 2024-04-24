@@ -17,6 +17,7 @@ import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -52,6 +53,7 @@ public class WebManagerController {
     @Autowired
     private WebMemberService webMemberService;
 
+    @PreAuthorize("hasAuthority('权限管理') || hasAnyRole('ROLE_教授', 'ROLE_副教授', 'ROLE_讲师')")
     @GetMapping("/all/{pageSize}/{currentPage}")
     public Response<Map<String, Object>> getAllWebManager(@PathVariable("pageSize") Integer pageSize,
                                                           @PathVariable("currentPage") Integer currentPage) {
@@ -62,6 +64,7 @@ public class WebManagerController {
         ));
     }
 
+    @PreAuthorize("hasAuthority('权限管理') || hasAnyRole('ROLE_教授', 'ROLE_副教授', 'ROLE_讲师')")
     @SystemLog(businessName = "删除成员")
     @DeleteMapping("/{id}")
     @Transactional
@@ -74,6 +77,7 @@ public class WebManagerController {
         return Response.ok();
     }
 
+    @PreAuthorize("hasAuthority('权限管理') || hasAnyRole('ROLE_教授', 'ROLE_副教授', 'ROLE_讲师')")
     @GetMapping("/{username}")
     public Response<List<WebManager>> getManagerByUsername(@PathVariable("username") String username) {
         return Response.ok(
@@ -83,6 +87,7 @@ public class WebManagerController {
         );
     }
 
+    @PreAuthorize("hasAuthority('权限管理') || hasAnyRole('ROLE_教授', 'ROLE_副教授', 'ROLE_讲师')")
     @SystemLog(businessName = "修改一个成员")
     @PutMapping
     public Response<Object> putManagerById(@RequestBody WebManager manager) {
