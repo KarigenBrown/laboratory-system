@@ -38,12 +38,13 @@ CREATE TABLE `web_achievement`
     `abstract`             text COMMENT '摘要',
 
     category               varchar(100)     not null comment '类别',
-    initials               varchar(255) default '' '论文首字母',
+    initials               varchar(255) default '' comment '论文首字母',
     -- 修改
     internal               varchar(1)   default '1' comment '是否为实验室内部论文', -- 原int(1)
     article_status         int(1)       default 0 comment '论文状态',               -- 原varchar(50)
     hidden                 varchar(1)   default '0' comment '是否隐藏',             -- 原int(1)
     technique_status       int(1)       default 0 comment '技术状态',               -- 原varchar(50)
+    log                    text comment '日志',
     -- 结束
 
     -- 原成就字段

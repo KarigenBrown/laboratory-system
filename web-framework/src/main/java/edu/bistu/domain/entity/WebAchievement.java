@@ -69,6 +69,7 @@ public class WebAchievement {
     //技术状态
     @Schema(title = "技术状态,分为申请中、已授权")
     private Integer techniqueStatus;
+    private String log;
     //类别
     @Schema(title = "原成就的类别")
     private String achievementCategory;
