@@ -8,8 +8,8 @@ spring:
     password: root
   servlet:
     multipart:
-      max-file-size: 2MB
-      max-request-size: 5MB
+      max-file-size: 200MB
+      max-request-size: 205MB
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
