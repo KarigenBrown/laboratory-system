@@ -1,0 +1,8 @@
+FROM bitnami/java:21
+LABEL authors="KarigenBrown"
+
+COPY ./weg-admin/target/weg-admin.jar /app.jar
+
+EXPOSE 8081
+
+ENTRYPOINT ["java", "-jar","/app.jar"]

@@ -1,0 +1,8 @@
+FROM bitnami/java:21
+LABEL authors="KarigenBrown"
+
+COPY ./web-guest/target/web-guest.jar /app.jar
+
+EXPOSE 8081
+
+ENTRYPOINT ["java", "-jar","/app.jar"]
