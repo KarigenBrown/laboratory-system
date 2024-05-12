@@ -1,7 +1,22 @@
 version: '3'
 
 services:
-  app:
+  guest:
+    container_name: lab-sys-guest
+    image: lab-sys-guest:latest
+    build:
+      context: ../
+      dockerfile: container/Dockerfile-Guest
+    ports:
+      - 8080:8080
+  admin:
+    container_name: lab-sys-admin
+    image: lab-sys-admin:latest
+    build:
+      context: ../
+      dockerfile: container/Dockerfile-Admin
+    ports:
+      - 8081:8081
   db:
     container_name: mysql
     image: mysql

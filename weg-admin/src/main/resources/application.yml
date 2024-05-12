@@ -3,7 +3,10 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
+    # 本地
     # url: jdbc:mysql://localhost:3306/web
+    # compose
+    # url: jdbc:mysql://mysql:3306/web
     url: jdbc:mysql://10.88.0.7:3306/web
     username: root
     password: root
@@ -17,6 +20,8 @@ spring:
   # 本地跑直接删除
   data:
     redis:
+      # compose
+      # host: redis
       host: 10.88.0.9
 mybatis-plus:
   configuration:
@@ -28,7 +33,10 @@ mybatis-plus:
       logic-not-delete-value: 0
       id-type: auto
 minio:
+  # 本地
   # endpoint: http://localhost:9000
+  # compose
+  # endpoint: http://minio:9000
   endpoint: http://10.88.0.8:9000
   bucket-name: web
   access-key: minioadmin
