@@ -21,7 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @since 2024-04-21 23:00:38
  */
 @RateLimiter(name = "default")
-@PreAuthorize("hasAuthority('人员管理') || hasAnyRole('ROLE_教授', 'ROLE_副教授', 'ROLE_讲师')")
+@PreAuthorize("hasAuthority('成员管理') || hasAnyRole('ROLE_教授', 'ROLE_副教授', 'ROLE_讲师')")
 @RestController
 @RequestMapping("/webRawMember")
 public class WebRawMemberController {
@@ -31,7 +31,7 @@ public class WebRawMemberController {
     @Autowired
     private WebRawMemberService webRawMemberService;
 
-    @SystemLog(businessName = "新增人员原始数据")
+    @SystemLog(businessName = "新增成员原始数据")
     @SneakyThrows
     @PostMapping("/excel/upload")
     public Response<Object> uploadPhoto(@RequestPart("excel") MultipartFile file) {

@@ -73,7 +73,7 @@ public class WebMemberController {
 
     //--------------------------------------------------
 
-    @PreAuthorize("hasAuthority('人员管理') || hasAnyRole('ROLE_教授', 'ROLE_副教授', 'ROLE_讲师')")
+    @PreAuthorize("hasAuthority('成员管理') || hasAnyRole('ROLE_教授', 'ROLE_副教授', 'ROLE_讲师')")
     @GetMapping("/all/{pageSize}/{currentPage}")
     public Response<Map<String, Object>> getAllMembers(@PathVariable("pageSize") Integer pageSize,
                                                        @PathVariable("currentPage") Integer currentPage) {
@@ -84,7 +84,7 @@ public class WebMemberController {
         ));
     }
 
-    @PreAuthorize("hasAuthority('人员管理')")
+    @PreAuthorize("hasAuthority('成员管理')")
     @GetMapping("/name/{name}")
     public Response<List<WebMember>> getMembersByName(@PathVariable("name") String name) {
         return Response.ok(
@@ -94,7 +94,7 @@ public class WebMemberController {
         );
     }
 
-    @PreAuthorize("hasAuthority('人员管理') || hasAnyRole('ROLE_教授', 'ROLE_副教授', 'ROLE_讲师')")
+    @PreAuthorize("hasAuthority('成员管理') || hasAnyRole('ROLE_教授', 'ROLE_副教授', 'ROLE_讲师')")
     @GetMapping("/identity/{identity}/{pageSize}/{currentPage}")
     public Response<Map<String, Object>> getMembersByIdentity(@PathVariable("pageSize") Integer pageSize,
                                                           @PathVariable("currentPage") Integer currentPage,
@@ -109,7 +109,7 @@ public class WebMemberController {
     }
 
     @SystemLog(businessName = "删除成员")
-    @PreAuthorize("hasAuthority('人员管理') || hasAnyRole('ROLE_教授', 'ROLE_副教授', 'ROLE_讲师')")
+    @PreAuthorize("hasAuthority('成员管理') || hasAnyRole('ROLE_教授', 'ROLE_副教授', 'ROLE_讲师')")
     @DeleteMapping("/{id}")
     @Transactional
     public Response<Object> deleteMemberById(@PathVariable("id") Integer id) {
@@ -122,7 +122,7 @@ public class WebMemberController {
     }
 
     @SystemLog(businessName = "新增成员")
-    @PreAuthorize("hasAuthority('人员管理') || hasAnyRole('ROLE_教授', 'ROLE_副教授', 'ROLE_讲师')")
+    @PreAuthorize("hasAuthority('成员管理') || hasAnyRole('ROLE_教授', 'ROLE_副教授', 'ROLE_讲师')")
     @PostMapping
     public Response<Object> postMember(@RequestBody WebMember member) {
         member.setPhotoUrl("");

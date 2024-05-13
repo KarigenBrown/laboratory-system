@@ -37,22 +37,22 @@ public class WebMemberController {
         return Response.ok(webMemberService.list());
     }
 
-    @Operation(summary = "根据学工号(唯一标识)查看人员信息")
+    @Operation(summary = "根据学工号(唯一标识)查看成员信息")
     @Parameter(name = "number", description = "学工号")
     @GetMapping("/{number}")
     public Response<WebMember> getByNumber(@PathVariable("number") String number) {
         return Response.ok(webMemberService.lambdaQuery().eq(WebMember::getNumber, number).one());
     }
 
-    @Operation(summary = "根据学工号查询人员的照片链接")
+    @Operation(summary = "根据学工号查询成员的照片链接")
     @Parameter(name = "number", description = "学工号")
     @GetMapping("/{number}/photoUrl")
     public Response<String> getPhotoUrlByNumber(@PathVariable("number") String number) {
         return Response.ok(webMemberService.lambdaQuery().eq(WebMember::getNumber, number).one().getPhotoUrl());
     }
 
-    @Operation(summary = "根据身份查询人员")
-    @Parameter(name = "identity", description = "人员身份,包括教授、副教授、在学生、毕业生")
+    @Operation(summary = "根据身份查询成员")
+    @Parameter(name = "identity", description = "成员身份,包括教授、副教授、在学生、毕业生")
     @GetMapping("/{identity}")
     public Response<List<WebMember>> getByIdentity(@PathVariable("identity") String identity) {
         return Response.ok(webMemberService.lambdaQuery().like(WebMember::getIdentity, identity).list());
