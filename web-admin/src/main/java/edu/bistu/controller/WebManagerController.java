@@ -73,11 +73,7 @@ public class WebManagerController {
     @DeleteMapping("/{id}")
     @Transactional
     public Response<Object> deleteManagerById(@PathVariable("id") Integer id) {
-        String number = webManagerService.getById(id).getNumber();
         webManagerService.removeById(id);
-        webMemberService.lambdaUpdate()
-                .eq(WebMember::getNumber, number)
-                .remove();
         return Response.ok();
     }
 
