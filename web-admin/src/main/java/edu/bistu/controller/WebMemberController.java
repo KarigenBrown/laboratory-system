@@ -42,7 +42,7 @@ public class WebMemberController {
     @Autowired
     private WebManagerService webManagerService;
 
-    @PreAuthorize("hasAuthority('个人')")
+    @PreAuthorize("hasAuthority('个人信息管理')")
     @GetMapping("/{userNumber}")
     public Response<WebMember> getMemberByNumber(@PathVariable("userNumber") String number) {
         return Response.ok(
@@ -53,7 +53,7 @@ public class WebMemberController {
     }
 
     @SystemLog(businessName = "修改个人头像")
-    @PreAuthorize("hasAuthority('个人')")
+    @PreAuthorize("hasAuthority('个人信息管理')")
     @PostMapping("/photo")
     public Response<Map<String, String>> uploadPhoto(@RequestParam("photoName") String photoName,
                                                      @RequestPart("photo") MultipartFile file) {
@@ -64,7 +64,7 @@ public class WebMemberController {
     }
 
     @SystemLog(businessName = "修改个人信息")
-    @PreAuthorize("hasAuthority('个人')")
+    @PreAuthorize("hasAuthority('个人信息管理')")
     @PutMapping
     public Response<Object> putMemberById(@RequestBody WebMember member) {
         webMemberService.updateById(member);

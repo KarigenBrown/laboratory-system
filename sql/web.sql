@@ -77,7 +77,7 @@ CREATE TABLE `web_manager`
     `username`  varchar(50)  DEFAULT '' COMMENT '账号',
     `password`  text COMMENT '密码',
 
-    permits     varchar(100) default '个人' comment '权限',
+    permits     varchar(100) default '个人信息管理' comment '权限',
 
     deleted     int(1)       default 0 comment '逻辑删除标志(0代表未删除,1代表已删除)',
     create_by   int(10)      default null,
