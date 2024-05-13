@@ -1,7 +1,7 @@
 FROM bitnami/java:21
 LABEL authors="KarigenBrown"
 
-COPY ./weg-admin/target/weg-admin.jar /app.jar
+COPY ./web-admin/target/web-admin.jar /app.jar
 
 EXPOSE 8081
 

@@ -9,7 +9,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>weg-admin</artifactId>
+    <artifactId>web-admin</artifactId>
     <packaging>jar</packaging>
 
     <properties>

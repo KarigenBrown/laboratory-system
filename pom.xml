@@ -11,7 +11,7 @@
     <modules>
         <module>web-framework</module>
         <module>web-guest</module>
-        <module>weg-admin</module>
+        <module>web-admin</module>
     </modules>
 
     <properties>
