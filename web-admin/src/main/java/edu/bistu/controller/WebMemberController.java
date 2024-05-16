@@ -42,7 +42,7 @@ public class WebMemberController {
     @Autowired
     private WebManagerService webManagerService;
 
-    @PreAuthorize("hasAuthority('个人信息管理')")
+    @PreAuthorize("hasAuthority('个人信息管理') || hasAnyRole('ROLE_教授', 'ROLE_副教授', 'ROLE_讲师')")
     @GetMapping("/{userNumber}")
     public Response<WebMember> getMemberByNumber(@PathVariable("userNumber") String number) {
         return Response.ok(
@@ -53,7 +53,7 @@ public class WebMemberController {
     }
 
     @SystemLog(businessName = "修改个人头像")
-    @PreAuthorize("hasAuthority('个人信息管理')")
+    @PreAuthorize("hasAuthority('个人信息管理') || hasAnyRole('ROLE_教授', 'ROLE_副教授', 'ROLE_讲师')")
     @PostMapping("/photo")
     public Response<Map<String, String>> uploadPhoto(@RequestParam("photoName") String photoName,
                                                      @RequestPart("photo") MultipartFile file) {
@@ -64,7 +64,7 @@ public class WebMemberController {
     }
 
     @SystemLog(businessName = "修改个人信息")
-    @PreAuthorize("hasAuthority('个人信息管理')")
+    @PreAuthorize("hasAuthority('个人信息管理') || hasAnyRole('ROLE_教授', 'ROLE_副教授', 'ROLE_讲师')")
     @PutMapping
     public Response<Object> putMemberById(@RequestBody WebMember member) {
         webMemberService.updateById(member);
@@ -84,7 +84,7 @@ public class WebMemberController {
         ));
     }
 
-    @PreAuthorize("hasAuthority('成员管理')")
+    @PreAuthorize("hasAuthority('成员管理') || hasAnyRole('ROLE_教授', 'ROLE_副教授', 'ROLE_讲师')")
     @GetMapping("/name/{name}")
     public Response<List<WebMember>> getMembersByName(@PathVariable("name") String name) {
         return Response.ok(
@@ -97,8 +97,8 @@ public class WebMemberController {
     @PreAuthorize("hasAuthority('成员管理') || hasAnyRole('ROLE_教授', 'ROLE_副教授', 'ROLE_讲师')")
     @GetMapping("/identity/{identity}/{pageSize}/{currentPage}")
     public Response<Map<String, Object>> getMembersByIdentity(@PathVariable("pageSize") Integer pageSize,
-                                                          @PathVariable("currentPage") Integer currentPage,
-                                                          @PathVariable("identity") String identity) {
+                                                              @PathVariable("currentPage") Integer currentPage,
+                                                              @PathVariable("identity") String identity) {
         Page<WebMember> page = webMemberService.lambdaQuery()
                 .eq(WebMember::getIdentity, identity)
                 .page(new Page<>(currentPage, pageSize));

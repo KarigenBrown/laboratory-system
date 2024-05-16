@@ -62,8 +62,12 @@ public class WebManagerController {
     public Response<Map<String, Object>> getAllWebManager(@PathVariable("pageSize") Integer pageSize,
                                                           @PathVariable("currentPage") Integer currentPage) {
         Page<WebManager> page = webManagerService.page(new Page<>(currentPage, pageSize));
+        List<WebManager> managers = page.getRecords();
+        managers.forEach(manager -> manager.setIdentity(webMemberService.lambdaQuery().eq(WebMember::getNumber, manager.getNumber())
+                .one()
+                .getIdentity()));
         return Response.ok(Map.of(
-                "rows", page.getRecords(),
+                "rows", managers,
                 "total", page.getTotal()
         ));
     }
