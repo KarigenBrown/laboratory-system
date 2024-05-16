@@ -31,7 +31,9 @@ public class WebLogController {
     @GetMapping("/all/{pageSize}/{currentPage}")
     Response<Map<String, Object>> getAllLogs(@PathVariable("pageSize") Integer pageSize,
                                              @PathVariable("currentPage") Integer currentPage) {
-        Page<WebLog> page = webLogService.page(new Page<>(currentPage, pageSize));
+        Page<WebLog> page = webLogService.lambdaQuery()
+                .orderByDesc(WebLog::getCreateTime)
+                .page(new Page<>(currentPage, pageSize));
         return Response.ok(Map.of(
                 "rows", page.getRecords(),
                 "total", page.getTotal()
