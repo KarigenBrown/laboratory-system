@@ -26,8 +26,8 @@ import java.util.Map;
  * @author makejava
  * @since 2024-04-05 13:55:08
  */
-@RateLimiter(name = "default")
 @PreAuthorize("hasAuthority('活动管理') || hasAnyRole('ROLE_教授', 'ROLE_副教授', 'ROLE_讲师')")
+@RateLimiter(name = "default")
 @RestController
 @RequestMapping("/webActivity")
 public class WebActivityController {
@@ -68,8 +68,8 @@ public class WebActivityController {
 
     @SystemLog(businessName = "新增一张照片")
     @SneakyThrows
-    @PostMapping("/{title}/photo/upload")
-    public Response<Map<String, String>> uploadPhoto(@PathVariable("title") String title,
+    @PostMapping("/photo/upload")
+    public Response<Map<String, String>> uploadPhoto(@RequestParam("title") String title,
                                                      @RequestParam("photoName") String name,
                                                      @RequestPart("photos") List<MultipartFile> files) {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -83,14 +83,6 @@ public class WebActivityController {
             urls.add(url);
         });
         return Response.ok(Map.of("urls", String.join("\n", urls)));
-    }
-
-    @GetMapping("/{title}/photo/download/{filename}")
-    public void downloadPhoto(@PathVariable("title") String title,
-                              @PathVariable("filename") String filename,
-                              HttpServletResponse response) {
-        String name = "activityPhoto/" + title + "/" + filename;
-        minioUtils.download("web", name, response);
     }
 
     @SystemLog(businessName = "新增一个活动")

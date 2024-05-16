@@ -27,8 +27,8 @@ import java.util.Map;
  * @author makejava
  * @since 2024-04-06 16:28:42
  */
-@RateLimiter(name = "default")
 @PreAuthorize("hasAuthority('Demo管理') || hasAnyRole('ROLE_教授', 'ROLE_副教授', 'ROLE_讲师')")
+@RateLimiter(name = "default")
 @RestController
 @RequestMapping("/webDemo")
 public class WebDemoController {
@@ -43,7 +43,7 @@ public class WebDemoController {
 
     @GetMapping("/all/{pageSize}/{currentPage}")
     public Response<Map<String, Object>> getAllDemos(@PathVariable("pageSize") Integer pageSize,
-                                               @PathVariable("currentPage") Integer currentPage) {
+                                                     @PathVariable("currentPage") Integer currentPage) {
         Page<WebDemo> page = webDemoService.page(new Page<>(currentPage, pageSize));
         return Response.ok(Map.of(
                 "rows", page.getRecords(),
@@ -69,8 +69,8 @@ public class WebDemoController {
 
     @SystemLog(businessName = "新增照片")
     @SneakyThrows
-    @PostMapping("/{title}/photo/upload")
-    public Response<Map<String, String>> uploadPhoto(@PathVariable("title") String title,
+    @PostMapping("/photo/upload")
+    public Response<Map<String, String>> uploadPhoto(@RequestParam("title") String title,
                                                      @RequestParam("photoName") String name,
                                                      @RequestPart("photos") List<MultipartFile> files) {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -87,8 +87,8 @@ public class WebDemoController {
     }
 
     @SystemLog(businessName = "新增视频")
-    @PostMapping("/{title}/video/upload")
-    public Response<Map<String, String>> uploadVideo(@PathVariable("title") String title,
+    @PostMapping("/video/upload")
+    public Response<Map<String, String>> uploadVideo(@RequestParam("title") String title,
                                                      @RequestPart("videos") List<MultipartFile> files) {
         List<String> videoUrls = new ArrayList<>();
         String path = "demo/" + title + "/video/";
@@ -99,22 +99,6 @@ public class WebDemoController {
             videoUrls.add(url);
         });
         return Response.ok(Map.of("videoUrls", String.join("\n", videoUrls)));
-    }
-
-    @GetMapping("/{title}/photo/download/{filename}")
-    public void downloadPhoto(@PathVariable("title") String title,
-                              @PathVariable("filename") String filename,
-                              HttpServletResponse response) {
-        String name = "demo/" + title + "/photo/" + filename;
-        minioUtils.download("web", name, response);
-    }
-
-    @GetMapping("/{title}/video/download/{filename}")
-    public void downloadVideo(@PathVariable("title") String title,
-                              @PathVariable("filename") String filename,
-                              HttpServletResponse response) {
-        String name = "demo/" + title + "/video/" + filename;
-        minioUtils.download("web", name, response);
     }
 
     @SystemLog(businessName = "新增Demo")
