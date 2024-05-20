@@ -14,6 +14,7 @@ import edu.bistu.service.WebMemberService;
 import edu.bistu.service.WebRawMemberService;
 import edu.bistu.utils.JwtUtils;
 import edu.bistu.utils.RedisCache;
+import edu.bistu.utils.SecurityUtils;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -143,6 +144,17 @@ public class WebManagerController {
         String userid = JwtUtils.parseJWT(token).getSubject();
         // request.getServletContext().removeAttribute(userid);
         redisCache.deleteCacheObject(userid);
+        return Response.ok();
+    }
+
+    @SystemLog(businessName = "修改密码")
+    @PutMapping("/changePassword")
+    public Response<Object> changePassword(@RequestParam("newPassword") String newPassword) {
+        Integer userId = SecurityUtils.getUserId();
+        webManagerService.lambdaUpdate()
+                .eq(WebManager::getId, userId)
+                .set(WebManager::getPassword, passwordEncoder.encode(newPassword))
+                .update();
         return Response.ok();
     }
 }
