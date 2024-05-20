@@ -125,6 +125,7 @@ public class WebManagerController {
         WebManager webManager = new WebManager()
                 .setUsername(user.get("username"))
                 .setPassword(passwordEncoder.encode(user.get("password")))
+                .setPermits("个人信息管理")
                 .setNumber(webRawMember.getNumber());
         webManagerService.save(webManager);
 
