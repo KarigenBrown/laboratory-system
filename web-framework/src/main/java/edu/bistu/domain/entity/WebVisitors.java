@@ -11,7 +11,7 @@ import java.io.Serializable;
 /**
  * 访问管理(WebVisitors)实体类
  *
- * @author makejava
+ * @author KarigenBrown
  * @since 2024-03-20 19:10:07
  */
 

@@ -6,7 +6,7 @@ import edu.bistu.domain.entity.WebProject;
 /**
  * (WebProject)表服务接口
  *
- * @author makejava
+ * @author KarigenBrown
  * @since 2024-03-20 19:49:33
  */
 public interface WebProjectService extends IService<WebProject> {

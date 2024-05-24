@@ -14,7 +14,7 @@ import java.io.Serializable;
 /**
  * (WebRawMember)表实体类
  *
- * @author makejava
+ * @author KarigenBrown
  * @since 2024-04-14 15:09:41
  */
 @Data

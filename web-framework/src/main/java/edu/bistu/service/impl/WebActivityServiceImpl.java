@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 /**
  * (WebActivity)表服务实现类
  *
- * @author makejava
+ * @author KarigenBrown
  * @since 2024-03-20 19:48:28
  */
 @Service("webActivityService")

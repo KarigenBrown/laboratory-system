@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * 论文管理(WebAchievement)表控制层
  *
- * @author makejava
+ * @author KarigenBrown
  * @since 2024-03-20 19:56:35
  */
 @Tag(name = "成就控制器", description = "除去项目，包含论文、专利、著作、软著、技术标准、竞赛获奖")

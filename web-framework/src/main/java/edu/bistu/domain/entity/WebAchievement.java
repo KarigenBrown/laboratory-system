@@ -16,7 +16,7 @@ import java.io.Serializable;
 /**
  * 论文管理(WebAchievement)表实体类
  *
- * @author makejava
+ * @author KarigenBrown
  * @since 2024-03-20 19:08:54
  */
 

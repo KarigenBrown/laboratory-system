@@ -14,7 +14,7 @@ import java.io.Serializable;
 /**
  * (WebActivity)实体类
  *
- * @author makejava
+ * @author KarigenBrown
  * @since 2024-03-20 19:09:12
  */
 @Schema(title = "活动实体")

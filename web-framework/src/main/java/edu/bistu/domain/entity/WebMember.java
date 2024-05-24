@@ -16,7 +16,7 @@ import java.io.Serializable;
 /**
  * 成员管理(WebMember)实体类
  *
- * @author makejava
+ * @author KarigenBrown
  * @since 2024-03-20 19:09:49
  */
 @Schema(title = "成员实体")

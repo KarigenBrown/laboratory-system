@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 访问管理(WebVisitors)表控制层
  *
- * @author makejava
+ * @author KarigenBrown
  * @since 2024-03-20 19:57:43
  */
 @RestController

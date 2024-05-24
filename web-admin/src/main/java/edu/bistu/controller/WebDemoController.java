@@ -24,7 +24,7 @@ import java.util.Map;
 /**
  * (WebDemo)表控制层
  *
- * @author makejava
+ * @author KarigenBrown
  * @since 2024-04-06 16:28:42
  */
 @PreAuthorize("hasAuthority('Demo管理') || hasAnyRole('ROLE_教授', 'ROLE_副教授', 'ROLE_讲师')")

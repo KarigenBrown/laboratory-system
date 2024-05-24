@@ -23,7 +23,7 @@ import java.util.Map;
 /**
  * (WebActivity)表控制层
  *
- * @author makejava
+ * @author KarigenBrown
  * @since 2024-04-05 13:55:08
  */
 @PreAuthorize("hasAuthority('活动管理') || hasAnyRole('ROLE_教授', 'ROLE_副教授', 'ROLE_讲师')")

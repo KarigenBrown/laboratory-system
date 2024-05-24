@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 /**
  * (WebProject)表数据库访问层
  *
- * @author makejava
+ * @author KarigenBrown
  * @since 2024-03-20 19:44:51
  */
 @Mapper

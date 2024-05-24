@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 /**
  * 访问管理(WebVisitors)表数据库访问层
  *
- * @author makejava
+ * @author KarigenBrown
  * @since 2024-03-20 19:45:00
  */
 @Mapper

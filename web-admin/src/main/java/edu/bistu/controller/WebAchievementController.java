@@ -17,7 +17,7 @@ import java.util.Map;
 /**
  * 论文管理(WebAchievement)表控制层
  *
- * @author makejava
+ * @author KarigenBrown
  * @since 2024-04-07 14:18:28
  */
 @RateLimiter(name = "default")

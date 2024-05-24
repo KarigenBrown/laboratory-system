@@ -31,7 +31,7 @@ import java.util.Objects;
 /**
  * (WebManager)表控制层
  *
- * @author makejava
+ * @author KarigenBrown
  * @since 2024-04-03 13:24:43
  */
 @RateLimiter(name = "default")

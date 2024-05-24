@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * (WebLog)表控制层
  *
- * @author makejava
+ * @author KarigenBrown
  * @since 2024-03-20 19:57:05
  */
 @RateLimiter(name = "default")

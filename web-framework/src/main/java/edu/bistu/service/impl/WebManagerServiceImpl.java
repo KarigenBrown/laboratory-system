@@ -29,7 +29,7 @@ import java.util.Objects;
 /**
  * (WebManager)表服务实现类
  *
- * @author makejava
+ * @author KarigenBrown
  * @since 2024-03-20 19:49:20
  */
 @Service("webManagerService")
